@@ -1,0 +1,28 @@
+Package: gamlssx
+Type: Package
+Title: Generalised Additive Extreme Value Models for Location, Scale and Shape
+Version: 1.0.0
+Date: 2023-12-18
+Authors@R: c(
+    person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
+      role = c("aut", "cre", "cph")),
+    person("Jennifer", "Ji", role = c("aut", "cph"))
+    )
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+Imports: gamlss,
+    nieve
+License: GPL (>= 2)
+LazyData: TRUE
+Encoding: UTF-8
+Depends:
+    R (>= 3.3.0)
+Suggests: knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr
+URL: https://paulnorthrop.github.io/gamlssx/, https://github.com/paulnorthrop/gamlssx
+BugReports: https://github.com/paulnorthrop/gamlssx/issues
+Config/testthat/edition: 3
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
