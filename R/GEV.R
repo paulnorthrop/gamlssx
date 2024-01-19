@@ -41,7 +41,8 @@
 #'   [`gamlss`][`gamlss::gamlss`]
 #' @examples
 #' # Simulate some data
-#' n <- 1000
+#' set.seed(17012023)
+#' n <- 100
 #' x <- stats::runif(n)
 #' mu <- 1 + 2 * x
 #' sigma <- 1
@@ -50,10 +51,18 @@
 #' plot(x, y)
 #' # Fit model
 #' data <- data.frame(y = as.numeric(y), x = x)
+#' library(gamlss)
 #' mod <- gamlss(y ~ pb(x), family = GEV, data = data)
 #' plot(mod)
 #' plot(data$x, data$y)
 #' lines(data$x, fitted(mod))
+#'
+#' # Converges
+#' modRS <- gamlss(y ~ pb(x), family = GEV, data = data, method = RS())
+#' # Throws an error: parameters out-of-bounds leads to Inf deviance
+#' modCG <- gamlss(y ~ pb(x), family = GEV, data = data, method = CG())
+#  # 2 iterations of RS before switching to CG results in convergence
+#' modMixed <- gamlss(y ~ pb(x), family = GEV, data = data, method = mixed())
 #' @name GEV
 NULL
 ## NULL
@@ -100,7 +109,7 @@ GEV <- function (mu.link = "identity", sigma.link = "log",
                dldm2 <- -dldm * dldm
                return(dldm2)
              },
-               dldd = function(y,mu,sigma,nu) {
+               dldd = function(y, mu, sigma, nu) {
                  dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
                                    log = TRUE, deriv = TRUE)
                  dldd <- attr(dl, "gradient")[, "scale"]
@@ -150,26 +159,26 @@ GEV <- function (mu.link = "identity", sigma.link = "log",
               dldddv <- -dldd * dldv
               return(dldddv)
             },
+#              d2ldmdd = function(y,mu,sigma,nu)  rep(0,length(y)),
+#              d2ldmdv = function(y,mu,sigma,nu)  rep(0,length(y)),
+#              d2ldddv = function(y,mu,sigma,nu)  rep(0,length(y)),
         G.dev.incr  = function(y, mu, sigma, nu,...) {
           val <- -2 * dGEV(x = y, mu = mu, sigma = sigma, nu = nu, log = TRUE)
-          cond <- is.infinite(val)
-          if (sum(cond) > 0) {
-            print(val[cond])
-            print(mu[cond])
-            print(sigma[cond])
-            print(nu[cond])
-            print(1 + nu[cond] * (y[cond] - mu[cond]) / sigma[cond])
-          }
+#          if (any(whichInf <- is.infinite(val))) {
+#            val[whichInf] <- 1e30
+#          }
+#          print(summary(val))
           return(val)
         },
               rqres = expression(rqres(pfun = "pGEV", type = "Continuous",
                                        y = y, mu = mu, sigma = sigma, nu = nu)),
          mu.initial = expression(mu <- y + 0.45 * sd(y)),
       sigma.initial = expression(sigma <- rep(0.78 * sd(y), length(y))),
-         nu.initial = expression(nu <- rep(0.1,length(y))),
+         nu.initial = expression(nu <- rep(0.1, length(y))),
            mu.valid = function(mu) TRUE,
         sigma.valid = function(sigma) all(sigma > 0),
-           nu.valid = function(nu) TRUE,
+#           nu.valid = function(nu) TRUE,
+           nu.valid = function(nu) all(mu > -0.5),
             y.valid = function(y) TRUE
     ),
   class = c("gamlss.family","family")

@@ -71,7 +71,8 @@ Add details.
 }
 \examples{
 # Simulate some data
-n <- 1000
+set.seed(17012023)
+n <- 100
 x <- stats::runif(n)
 mu <- 1 + 2 * x
 sigma <- 1
@@ -80,10 +81,17 @@ y <- nieve::rGEV(n = 1, loc = mu, scale = sigma, shape = xi)
 plot(x, y)
 # Fit model
 data <- data.frame(y = as.numeric(y), x = x)
+library(gamlss)
 mod <- gamlss(y ~ pb(x), family = GEV, data = data)
 plot(mod)
 plot(data$x, data$y)
 lines(data$x, fitted(mod))
+
+# Converges
+modRS <- gamlss(y ~ pb(x), family = GEV, data = data, method = RS())
+# Throws an error: parameters out-of-bounds leads to Inf deviance
+modCG <- gamlss(y ~ pb(x), family = GEV, data = data, method = CG())
+modMixed <- gamlss(y ~ pb(x), family = GEV, data = data, method = mixed())
 }
 \seealso{
 \code{\link[gamlss.dist:gamlss.family]{gamlss.family}},
