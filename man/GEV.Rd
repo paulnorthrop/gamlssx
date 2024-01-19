@@ -91,6 +91,9 @@ lines(data$x, fitted(mod))
 modRS <- gamlss(y ~ pb(x), family = GEV, data = data, method = RS())
 # Throws an error: parameters out-of-bounds leads to Inf deviance
 modCG <- gamlss(y ~ pb(x), family = GEV, data = data, method = CG())
+# Can we avoid the problem by halving the step lengths?
+modCG <- gamlss(y ~ pb(x), family = GEV, data = data, method = CG(),
+ control = gamlss.control(mu.step = 0.5, sigma.step = 0.5, nu.step = 0.5))
 modMixed <- gamlss(y ~ pb(x), family = GEV, data = data, method = mixed())
 }
 \seealso{
