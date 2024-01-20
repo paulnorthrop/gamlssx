@@ -2,6 +2,7 @@
 
 export(GEV)
 export(dGEV)
+export(fitGEV)
 export(pGEV)
 export(qGEV)
 export(rGEV)
