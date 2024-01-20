@@ -4,22 +4,28 @@
 \alias{fitGEV}
 \title{Fit a Generalized extreme value (GEV) GAMLSS}
 \usage{
-fitGEV(formula, stepLength = 1, stepReduce = 2, ...)
+fitGEV(formula, stepLength = 1, stepAttempts = 2, stepReduce = 2, ...)
 }
 \arguments{
 \item{formula}{Argument \code{formula} passed to \code{\link[gamlss:gamlss]{gamlss}}.}
 
-\item{stepLength}{A positive numeric scalar. The initial value of the common
-step lengths \code{mu.step}, \code{sigma.step} and \code{nu.step} passed to
+\item{stepLength}{A numeric vector containing positive values. The initial
+values of the step lengths \code{mu.step}, \code{sigma.step} and \code{nu.step} passed to
 \code{\link[gamlss:gamlss.control]{gamlss.control}} in the first attempt to fit
-the model by calling \code{\link[gamlss:gamlss]{gamlss}}.}
+the model by calling \code{\link[gamlss:gamlss]{gamlss}}. If \code{stepLength} has a
+length that is less than 3 then \code{stepLength} is recycled to have length 3.}
 
-\item{stepReduce}{A non-negative integer. If the first call to
-\code{\link[gamlss:gamlss]{gamlss}} throws an error then we make \code{stepReduce}
-further attempts to fit the model, each time dividing by \eqn{2} the values
+\item{stepAttempts}{A non-negative integer. If the first call to
+\code{\link[gamlss:gamlss]{gamlss}} throws an error then we make \code{stepAttempts}
+further attempts to fit the model, each time dividing by 2 the values
 of \code{mu.step}, \code{sigma.step} and \code{nu.step} supplied to
-\code{\link[gamlss:gamlss.control]{gamlss.control}}. If \code{stepReduce < 1} then
+\code{\link[gamlss:gamlss.control]{gamlss.control}}. If \code{stepAttempts < 1} then
 no further attempts are made.}
+
+\item{stepReduce}{A number greater than 1. The factor by which the step
+lengths in \code{stepLength} are reduced for each extra attempt to fit the
+model. The default, \code{stepReduce = 2} means that the step lengths are
+halved for each extra attempt.}
 
 \item{...}{Further arguments passed to \code{\link[gamlss:gamlss]{gamlss}}.}
 }
@@ -32,7 +38,7 @@ Returns a gamlss object. See the \strong{Value} section of
 Describe  \code{\link{GEV}}
 }
 \details{
-Add details. Explain \code{stepReduce} in more detail.
+Add details. Explain \code{stepAttempts} in more detail.
 }
 \examples{
 # Simulate some data
