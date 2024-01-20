@@ -72,8 +72,8 @@ NULL
 
 #' @rdname GEV
 #' @export
-GEV <- function (mu.link = "identity", sigma.link = "log",
-                 nu.link = "identity") {
+GEV <- function(mu.link = "identity", sigma.link = "log",
+                nu.link = "identity") {
 
   mstats <- gamlss.dist::checklink("mu.link", "GEV", substitute(mu.link),
                                    c("1/mu^2", "log", "identity"))
