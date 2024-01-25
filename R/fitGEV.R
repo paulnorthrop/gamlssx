@@ -56,7 +56,7 @@
 #' @export
 fitGEV <- function(formula, stepLength = 1, stepAttempts = 2, stepReduce = 2,
                    ...) {
-  mod <- try(gamlss(y ~ pb(x), family = GEV, mu.step = stepLength,
+  mod <- try(gamlss(formula = formula, family = GEV, mu.step = stepLength,
                     sigma.step = stepLength, nu.step = stepLength, ...),
              silent = TRUE)
   # If an error is thrown then try again stepAttempts times, each  time reducing
@@ -64,7 +64,7 @@ fitGEV <- function(formula, stepLength = 1, stepAttempts = 2, stepReduce = 2,
   isError <- inherits(mod, "try-error")
   while(isError & stepAttempts >= 1) {
     stepLength <- stepLength / stepReduce
-    mod <- try(gamlss(y ~ pb(x), family = GEV, mu.step = stepLength,
+    mod <- try(gamlss(formula = formula, family = GEV, mu.step = stepLength,
                       sigma.step = stepLength, nu.step = stepLength, ...),
                silent = TRUE)
     isError <- inherits(mod, "try-error")
