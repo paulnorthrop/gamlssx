@@ -11,13 +11,15 @@ Authors@R: c(
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 Imports: gamlss,
+    gamlss.dist,
     nieve
 License: GPL (>= 2)
 LazyData: TRUE
 Encoding: UTF-8
 Depends:
     R (>= 3.3.0)
-Suggests: knitr,
+Suggests: ismev,
+    knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
