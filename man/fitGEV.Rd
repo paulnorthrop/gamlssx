@@ -4,10 +4,17 @@
 \alias{fitGEV}
 \title{Fit a Generalized extreme value (GEV) GAMLSS}
 \usage{
-fitGEV(formula, stepLength = 1, stepAttempts = 2, stepReduce = 2, ...)
+fitGEV(formula, data, stepLength = 1, stepAttempts = 2, stepReduce = 2, ...)
 }
 \arguments{
-\item{formula}{Argument \code{formula} passed to \code{\link[gamlss:gamlss]{gamlss}}.}
+\item{formula}{a formula object, with the response on the left of an ~ operator, and the terms, separated by \eqn{+}{+} operators, on the right.
+  Nonparametric smoothing terms are indicated by \code{pb()} for penalised beta splines, \code{cs} for smoothing splines, \code{lo} for \code{loess} smooth terms and \code{random} or \code{ra}
+  for random terms, e.g. \code{y~cs(x,df=5)+x1+x2*x3}.  Additional smoothers can be added by creating the appropriate interface.
+  Interactions with nonparametric smooth terms are not fully supported, but will not produce errors;
+  they will simply produce the usual parametric interaction 
+  }
+
+\item{data}{a data frame containing the variables occurring in the formula, e.g. \code{data=aids}. If this is missing, the variables should be on the search list.}
 
 \item{stepLength}{A numeric vector containing positive values. The initial
 values of the step lengths \code{mu.step}, \code{sigma.step} and \code{nu.step} passed to
@@ -66,6 +73,37 @@ mod <- fitGEV(y ~ pb(x), data = data, method = mixed())
 
 # Fit model using the CG method
 mod <- fitGEV(y ~ pb(x), data = data, method = CG())
+
+# Fremantle data from the ismev package
+ismev <- requireNamespace("ismev", quietly = TRUE)
+
+if (ismev) {
+  data(fremantle, package = "ismev")
+  # Transform Year
+  fremantle <- transform(fremantle, cYear = Year - median(Year))
+
+  mod <- fitGEV(SeaLevel ~ pb(SOI), data = fremantle)
+  plot(fremantle$SOI, fremantle$SeaLevel)
+  lines(fremantle$SOI, fitted(mod))
+
+  mod <- fitGEV(SeaLevel ~ pb(cYear), data = fremantle)
+  plot(fremantle$cYear, fremantle$SeaLevel)
+  lines(fremantle$cYear, fitted(mod))
+
+  mod <- fitGEV(SeaLevel ~ SOI, data = fremantle)
+  plot(fremantle$SOI, fremantle$SeaLevel)
+  lines(fremantle$SOI, fitted(mod))
+
+  mod <- fitGEV(SeaLevel ~ cYear, data = fremantle)
+  plot(fremantle$cYear, fremantle$SeaLevel)
+  lines(fremantle$cYear, fitted(mod))
+
+  mod <- fitGEV(SeaLevel ~ SOI + cYear, data = fremantle)
+  plot(fremantle$SOI, fremantle$SeaLevel)
+  lines(fremantle$SOI, fitted(mod))
+  plot(fremantle$cYear, fremantle$SeaLevel)
+  lines(fremantle$cYear, fitted(mod))
+}
 }
 \seealso{
 \code{\link{GEV}}, \code{\link[gamlss.dist:gamlss.family]{gamlss.family}},

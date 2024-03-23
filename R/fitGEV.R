@@ -2,7 +2,8 @@
 #'
 #' Describe  [`GEV`]
 #'
-#' @param formula Argument `formula` passed to [`gamlss`][`gamlss::gamlss`].
+#' @inheritParams gamlss::gamlss
+#'
 #' @param stepLength A numeric vector containing positive values. The initial
 #'   values of the step lengths `mu.step`, `sigma.step` and `nu.step` passed to
 #'  [`gamlss.control`][`gamlss::gamlss.control`] in the first attempt to fit
@@ -53,19 +54,52 @@
 #'
 #' # Fit model using the CG method
 #' mod <- fitGEV(y ~ pb(x), data = data, method = CG())
+#'
+#' # Fremantle data from the ismev package
+#' ismev <- requireNamespace("ismev", quietly = TRUE)
+#'
+#' if (ismev) {
+#'   data(fremantle, package = "ismev")
+#'   # Transform Year
+#'   fremantle <- transform(fremantle, cYear = Year - median(Year))
+#'
+#'   mod <- fitGEV(SeaLevel ~ pb(SOI), data = fremantle)
+#'   plot(fremantle$SOI, fremantle$SeaLevel)
+#'   lines(fremantle$SOI, fitted(mod))
+#'
+#'   mod <- fitGEV(SeaLevel ~ pb(cYear), data = fremantle)
+#'   plot(fremantle$cYear, fremantle$SeaLevel)
+#'   lines(fremantle$cYear, fitted(mod))
+#'
+#'   mod <- fitGEV(SeaLevel ~ SOI, data = fremantle)
+#'   plot(fremantle$SOI, fremantle$SeaLevel)
+#'   lines(fremantle$SOI, fitted(mod))
+#'
+#'   mod <- fitGEV(SeaLevel ~ cYear, data = fremantle)
+#'   plot(fremantle$cYear, fremantle$SeaLevel)
+#'   lines(fremantle$cYear, fitted(mod))
+#'
+#'   mod <- fitGEV(SeaLevel ~ SOI + cYear, data = fremantle)
+#'   plot(fremantle$SOI, fremantle$SeaLevel)
+#'   lines(fremantle$SOI, fitted(mod))
+#'   plot(fremantle$cYear, fremantle$SeaLevel)
+#'   lines(fremantle$cYear, fitted(mod))
+#' }
 #' @export
-fitGEV <- function(formula, stepLength = 1, stepAttempts = 2, stepReduce = 2,
-                   ...) {
-  mod <- try(gamlss(formula = formula, family = GEV, mu.step = stepLength,
-                    sigma.step = stepLength, nu.step = stepLength, ...),
+fitGEV <- function(formula, data, stepLength = 1, stepAttempts = 2,
+                   stepReduce = 2, ...) {
+  mod <- try(gamlss::gamlss(formula = formula, family = GEV, data = data,
+                            mu.step = stepLength, sigma.step = stepLength,
+                            nu.step = stepLength, ...),
              silent = TRUE)
   # If an error is thrown then try again stepAttempts times, each  time reducing
   # the step length by a factor of a half
   isError <- inherits(mod, "try-error")
   while(isError & stepAttempts >= 1) {
     stepLength <- stepLength / stepReduce
-    mod <- try(gamlss(formula = formula, family = GEV, mu.step = stepLength,
-                      sigma.step = stepLength, nu.step = stepLength, ...),
+    mod <- try(gamlss::gamlss(formula = formula, family = GEV,
+                              mu.step = stepLength, sigma.step = stepLength,
+                              nu.step = stepLength, data = data, ...),
                silent = TRUE)
     isError <- inherits(mod, "try-error")
     stepAttempts <- stepAttempts - 1L
