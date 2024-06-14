@@ -1,4 +1,4 @@
-#' Generalized extreme value family distribution for fitting a GAMLSS
+#' GEV family distribution for fitting a GAMLSS using quasi Newton scoring
 #'
 #' The function `GEV` defines the generalized extreme value family
 #' distribution, a three parameter distribution, for a
