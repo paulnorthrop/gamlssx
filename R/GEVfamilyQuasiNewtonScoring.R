@@ -68,11 +68,11 @@
 #'  control = gamlss.control(mu.step = 0.5, sigma.step = 0.5, nu.step = 0.5))
 #  # 2 iterations of RS before switching to CG results in convergence
 #' modMixed <- gamlss(y ~ pb(x), family = GEV, data = data, method = mixed())
-#' @name GEV
+#' @name GEVquasi
 NULL
 ## NULL
 
-#' @rdname GEV
+#' @rdname GEVquasi
 #' @export
 GEVquasiNewton <- function(mu.link = "identity", sigma.link = "log",
                            nu.link = "identity") {
@@ -182,28 +182,28 @@ GEVquasiNewton <- function(mu.link = "identity", sigma.link = "log",
   )
 }
 
-#' @rdname GEV
+#' @rdname GEVquasi
 #' @export
 dGEV <- function(x, mu = 0, sigma = 1, nu = 0, log = FALSE) {
   return(nieve::dGEV(x = x, loc = mu, scale = sigma, shape = nu,
                      log = log))
 }
 
-#' @rdname GEV
+#' @rdname GEVquasi
 #' @export
 pGEV <- function(q, mu = 0, sigma = 1, nu = 0, lower.tail = TRUE,
                  log.p = FALSE) {
   return(nieve::pGEV(q = q, loc = mu, scale = sigma, shape = nu))
 }
 
-#' @rdname GEV
+#' @rdname GEVquasi
 #' @export
 qGEV <- function(p, mu = 0, sigma = 1, nu = 0, lower.tail = TRUE,
                  log.p = FALSE) {
   return(nieve::qGEV(p = p, loc = mu, scale = sigma, shape = nu))
 }
 
-#' @rdname GEV
+#' @rdname GEVquasi
 #' @export
 rGEV <- function(n, mu = 0, sigma = 1, nu = 0) {
   return(nieve::rGEV(n = n, loc = mu, scale = sigma, shape = nu))

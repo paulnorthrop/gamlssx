@@ -1,4 +1,4 @@
-#' GEV family distribution for fitting a GAMLSS using quasi Newton scoring
+#' GEV family distribution for fitting a GAMLSS using Fisher's scoring
 #'
 #' The function `GEV` defines the generalized extreme value family
 #' distribution, a three parameter distribution, for a
@@ -68,11 +68,11 @@
 #'  control = gamlss.control(mu.step = 0.5, sigma.step = 0.5, nu.step = 0.5))
 #  # 2 iterations of RS before switching to CG results in convergence
 #' modMixed <- gamlss(y ~ pb(x), family = GEV, data = data, method = mixed())
-#' @name GEV
+#' @name GEVfisher
 NULL
 ## NULL
 
-#' @rdname GEV
+#' @rdname GEVfisher
 #' @export
 GEVfisher <- function(mu.link = "identity", sigma.link = "log",
                       nu.link = "identity") {
@@ -161,28 +161,28 @@ GEVfisher <- function(mu.link = "identity", sigma.link = "log",
   )
 }
 
-#' @rdname GEV
+#' @rdname GEVfisher
 #' @export
 dGEV <- function(x, mu = 0, sigma = 1, nu = 0, log = FALSE) {
   return(nieve::dGEV(x = x, loc = mu, scale = sigma, shape = nu,
                      log = log))
 }
 
-#' @rdname GEV
+#' @rdname GEVfisher
 #' @export
 pGEV <- function(q, mu = 0, sigma = 1, nu = 0, lower.tail = TRUE,
                  log.p = FALSE) {
   return(nieve::pGEV(q = q, loc = mu, scale = sigma, shape = nu))
 }
 
-#' @rdname GEV
+#' @rdname GEVfisher
 #' @export
 qGEV <- function(p, mu = 0, sigma = 1, nu = 0, lower.tail = TRUE,
                  log.p = FALSE) {
   return(nieve::qGEV(p = p, loc = mu, scale = sigma, shape = nu))
 }
 
-#' @rdname GEV
+#' @rdname GEVfisher
 #' @export
 rGEV <- function(n, mu = 0, sigma = 1, nu = 0) {
   return(nieve::rGEV(n = n, loc = mu, scale = sigma, shape = nu))
