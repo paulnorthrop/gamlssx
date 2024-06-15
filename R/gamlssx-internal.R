@@ -12,21 +12,21 @@ NULL
 # --------------------- Constants and helper functions ---------------------- #
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 EulersConstant <- 0.57721566490153286060651209008240243104215933593992
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 AperysConstant <- 1.202056903159594285399738161511449990764986292
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 pxi <- function(xi) {
   return((1 + xi) ^ 2 * gamma(1 + 2 * xi))
 }
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 qxi <- function(xi) {
   return(gamma(2 + xi) * (digamma(1 + xi) + (1 + xi) / xi))
 }
@@ -34,17 +34,17 @@ qxi <- function(xi) {
 # ------------------------------ (sigma, sigma) ----------------------------- #
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev22e0Fn <- function() {
   return(pi ^ 2 / 6 + (1 - EulersConstant) ^ 2)
 }
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev22e0Constant <- gev22e0Fn()
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev22eFn <- function(xi) {
   return((1 - 2 * gamma(2 + xi) + pxi(xi)) / (xi ^ 2))
 }
@@ -52,7 +52,7 @@ gev22eFn <- function(xi) {
 # --------------------------------- (xi, xi) -------------------------------- #
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev33e0Fn <- function() {
   val <- pi ^ 2 / 6 - pi ^ 2 * EulersConstant / 2 + EulersConstant ^ 2 -
     EulersConstant ^ 3 - 2 * AperysConstant +
@@ -62,11 +62,11 @@ gev33e0Fn <- function() {
 }
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev33e0Constant <- gev33e0Fn()
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev33eFn <- function(xi) {
   val <- (pi ^ 2 / 6 + (1 - EulersConstant + 1 / xi) ^ 2 - 2 * qxi(xi) / xi +
             pxi(xi) / xi ^ 2) / (xi ^ 2)
@@ -76,17 +76,17 @@ gev33eFn <- function(xi) {
 # -------------------------------- (mu, sigma) ------------------------------ #
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev12e0Fn <- function() {
   return(EulersConstant - 1)
 }
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev12e0Constant <- gev12e0Fn()
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev12eFn <- function(xi) {
   val <- (gamma(2 + xi) - pxi(xi)) / xi
   return(val)
@@ -95,17 +95,17 @@ gev12eFn <- function(xi) {
 # --------------------------------- (mu, xi) -------------------------------- #
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev13e0Fn <- function() {
   return((pi ^ 2 / 6 + EulersConstant ^ 2 - 2 * EulersConstant) / 2)
 }
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev13e0Constant <- gev13e0Fn()
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev13eFn <- function(xi) {
   val <- (pxi(xi) / xi - qxi(xi)) / xi
   return(val)
@@ -114,7 +114,7 @@ gev13eFn <- function(xi) {
 # ------------------------------- (sigma, xi) ------------------------------- #
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev23e0Fn <- function() {
   val <- (4 * EulersConstant + 4 * AperysConstant + pi ^ 2 * EulersConstant +
      2 * EulersConstant ^ 3 - pi ^ 2 - 6 * EulersConstant ^ 2) / 4
@@ -122,11 +122,11 @@ gev23e0Fn <- function() {
 }
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev23e0Constant <- gev23e0Fn()
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gev23eFn <- function(xi) {
   val <- -(1 - EulersConstant + (1 - gamma(2 + xi)) / xi - qxi(xi) +
              pxi(xi) / xi) / (xi ^ 2)
@@ -136,7 +136,7 @@ gev23eFn <- function(xi) {
 # -- Calculate a component using a quadratic approximation if xi is near 0 -- #
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 gevExpInfoComp <- function(fun, fun0, xi, eps = 3e-3) {
   eps <- abs(eps)
   val <- xi
@@ -152,7 +152,7 @@ gevExpInfoComp <- function(fun, fun0, xi, eps = 3e-3) {
 }
 
 #' @keywords internal
-#' @rdname evils-internal
+#' @rdname gamlssx-internal
 lagrangianInterpolation <- function(x0, y0) {
   f <- function(x) {
     sum(y0 * sapply(seq_along(x0), \(j) {
