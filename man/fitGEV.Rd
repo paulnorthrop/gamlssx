@@ -4,7 +4,19 @@
 \alias{fitGEV}
 \title{Fit a Generalized extreme value (GEV) GAMLSS}
 \usage{
-fitGEV(formula, data, stepLength = 1, stepAttempts = 2, stepReduce = 2, ...)
+fitGEV(
+  formula,
+  data,
+  scoring = c("fisher", "quasi"),
+  mu.link = "identity",
+  sigma.link = "log",
+  xi.link = "identity",
+  stepLength = 1,
+  stepAttempts = 2,
+  stepReduce = 2,
+  eps,
+  ...
+)
 }
 \arguments{
 \item{formula}{a formula object, with the response on the left of an ~ operator, and the terms, separated by \eqn{+}{+} operators, on the right.
@@ -15,6 +27,16 @@ fitGEV(formula, data, stepLength = 1, stepAttempts = 2, stepReduce = 2, ...)
   }
 
 \item{data}{a data frame containing the variables occurring in the formula, e.g. \code{data=aids}. If this is missing, the variables should be on the search list.}
+
+\item{scoring}{A character scalar. If \code{scoring = "fisher"} then the weights
+used in the fitting algorithm are based on the expected Fisher
+information, that is, a Fisher's scoring algorithm is used.
+If \verb{scoring = "quasi} then these weights are based on the cross products
+of the first derivatives of the log-likelihood, leading to a quasi Newton
+scoring algorithm.}
+
+\item{mu.link, sigma.link, xi.link}{Character scalars to set the respective
+link functions for the location, scale and shape parameters.}
 
 \item{stepLength}{A numeric vector containing positive values. The initial
 values of the step lengths \code{mu.step}, \code{sigma.step} and \code{nu.step} passed to
@@ -34,7 +56,10 @@ lengths in \code{stepLength} are reduced for each extra attempt to fit the
 model. The default, \code{stepReduce = 2} means that the step lengths are
 halved for each extra attempt.}
 
-\item{...}{Further arguments passed to \code{\link[gamlss:gamlss]{gamlss}}.}
+\item{eps}{Argument \code{eps} passed to \code{\link{gevExpInfo}}.}
+
+\item{...}{Further arguments passed to \code{\link[gamlss:gamlss]{gamlss}}, in
+particular \code{method}, with options \code{RS()}, \code{CG()} or \code{mixed()}.}
 }
 \value{
 Returns a gamlss object. See the \strong{Value} section of
@@ -87,6 +112,10 @@ if (ismev) {
   lines(fremantle$SOI, fitted(mod))
 
   mod <- fitGEV(SeaLevel ~ pb(cYear), data = fremantle)
+  plot(fremantle$cYear, fremantle$SeaLevel)
+  lines(fremantle$cYear, fitted(mod))
+
+  mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), data = fremantle)
   plot(fremantle$cYear, fremantle$SeaLevel)
   lines(fremantle$cYear, fitted(mod))
 
