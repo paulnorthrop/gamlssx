@@ -164,15 +164,8 @@ GEVquasiNewton <- function(mu.link = "identity", sigma.link = "log",
               dldddv <- -dldd * dldv
               return(dldddv)
             },
-#              d2ldmdd = function(y,mu,sigma,nu)  rep(0,length(y)),
-#              d2ldmdv = function(y,mu,sigma,nu)  rep(0,length(y)),
-#              d2ldddv = function(y,mu,sigma,nu)  rep(0,length(y)),
         G.dev.incr  = function(y, mu, sigma, nu,...) {
           val <- -2 * dGEV(x = y, mu = mu, sigma = sigma, nu = nu, log = TRUE)
-#          if (any(whichInf <- is.infinite(val))) {
-#            val[whichInf] <- 1e30
-#          }
-#          print(summary(val))
           return(val)
         },
               rqres = expression(rqres(pfun = "pGEV", type = "Continuous",
@@ -182,7 +175,6 @@ GEVquasiNewton <- function(mu.link = "identity", sigma.link = "log",
          nu.initial = expression(nu <- rep(0.1, length(y))),
            mu.valid = function(mu) TRUE,
         sigma.valid = function(sigma) all(sigma > 0),
-#           nu.valid = function(nu) TRUE,
            nu.valid = function(nu) all(nu > -0.5),
             y.valid = function(y) TRUE
     ),
