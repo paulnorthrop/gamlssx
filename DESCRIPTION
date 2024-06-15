@@ -18,10 +18,11 @@ LazyData: TRUE
 Encoding: UTF-8
 Depends:
     R (>= 3.3.0)
-Suggests: ismev,
+Suggests: 
+    ismev,
     knitr,
     rmarkdown,
-    testthat
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 URL: https://paulnorthrop.github.io/gamlssx/, https://github.com/paulnorthrop/gamlssx
 BugReports: https://github.com/paulnorthrop/gamlssx/issues
