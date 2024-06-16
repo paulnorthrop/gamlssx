@@ -101,36 +101,46 @@
 #' }
 #' @export
 fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
-                   mu.link = "identity", sigma.link = "log",
-                   xi.link = "identity", stepLength = 1, stepAttempts = 2,
-                   stepReduce = 2, eps, ...) {
+                   stepLength = 1, stepAttempts = 2, stepReduce = 2, eps, ...) {
   # Check that one of the correct values of scoring has been supplied
   scoring <- match.arg(scoring)
   # Choose the scoring algorithm and links
-  if (scoring == "fisher") {
-    algor <- substitute(GEVfisher(mu.link = mu.link,
-                                  sigma.link = sigma.link,
-                                  nu.link = xi.link))
-    print(algor)
-  } else {
-    algor <- substitute(GEVquasiNewton(mu.link = mu.link,
-                                       sigma.link = sigma.link,
-                                       nu.link = xi.link))
-  }
   # Fit using the supplied/default value of step length
-  mod <- try(gamlss::gamlss(formula = formula, family = algor,
-                            mu.step = stepLength, sigma.step = stepLength,
-                            nu.step = stepLength, data = data, ...),
-             silent = TRUE)
+  if (scoring == "fisher") {
+    mod <- try(gamlss::gamlss(formula = formula,
+                              family = GEVfisher(...),
+                              mu.step = stepLength, sigma.step = stepLength,
+                              nu.step = stepLength, data = data, ...),
+               silent = TRUE)
+  } else {
+    mod <- try(gamlss::gamlss(formula = formula,
+                              family = GEVquasiNewton(...),
+                              mu.step = stepLength, sigma.step = stepLength,
+                              nu.step = stepLength, data = data, ...),
+               silent = TRUE)
+  }
   # If an error is thrown then try again stepAttempts times, each  time reducing
   # the step length by a factor of a half
   isError <- inherits(mod, "try-error")
   while(isError & stepAttempts >= 1) {
     stepLength <- stepLength / stepReduce
-    mod <- try(gamlss::gamlss(formula = formula, family = algor,
-                              mu.step = stepLength, sigma.step = stepLength,
-                              nu.step = stepLength, data = data, ...),
-               silent = TRUE)
+    if (scoring == "fisher") {
+      mod <- try(gamlss::gamlss(formula = formula,
+                                family = GEVfisher(...),
+                                mu.step = stepLength, sigma.step = stepLength,
+                                nu.step = stepLength, data = data, ...),
+                 silent = TRUE)
+    } else {
+      mod <- try(gamlss::gamlss(formula = formula,
+                                family = GEVquasiNewton(...),
+                                mu.step = stepLength, sigma.step = stepLength,
+                                nu.step = stepLength, data = data, ...),
+                 silent = TRUE)
+    }
+#    mod <- try(gamlss::gamlss(formula = formula, family = algor,
+#                              mu.step = stepLength, sigma.step = stepLength,
+#                              nu.step = stepLength, data = data, ...),
+#               silent = TRUE)
     isError <- inherits(mod, "try-error")
     stepAttempts <- stepAttempts - 1L
   }
