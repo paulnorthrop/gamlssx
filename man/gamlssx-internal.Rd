@@ -3,6 +3,7 @@
 \docType{data}
 \name{gamlssx-internal}
 \alias{gamlssx-internal}
+\alias{templateFit}
 \alias{EulersConstant}
 \alias{AperysConstant}
 \alias{pxi}
@@ -41,6 +42,8 @@ An object of class \code{numeric} of length 1.
 An object of class \code{numeric} of length 1.
 }
 \usage{
+templateFit(formula, stepLength, data, ...)
+
 EulersConstant
 
 AperysConstant

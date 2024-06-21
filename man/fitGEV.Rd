@@ -8,6 +8,9 @@ fitGEV(
   formula,
   data,
   scoring = c("fisher", "quasi"),
+  mu.link = "identity",
+  sigma.link = "log",
+  xi.link = "identity",
   stepLength = 1,
   stepAttempts = 2,
   stepReduce = 2,
@@ -31,6 +34,11 @@ If \code{scoring = "quasi"} then these weights are based on the cross products
 of the first derivatives of the log-likelihood, leading to a quasi Newton
 scoring algorithm.}
 
+\item{mu.link, sigma.link, xi.link}{Character scalars to set the respective
+link functions for the location (\code{mu}), scale (\code{sigma}) and shape (\code{xi})
+parameters. The latter is passed to \code{\link[gamlss:gamlss]{gamlss}} as
+\code{nu.link}.}
+
 \item{stepLength}{A numeric vector containing positive values. The initial
 values of the step lengths \code{mu.step}, \code{sigma.step} and \code{nu.step} passed to
 \code{\link[gamlss:gamlss.control]{gamlss.control}} in the first attempt to fit
@@ -51,9 +59,6 @@ halved for each extra attempt.}
 
 \item{...}{Further arguments passed to \code{\link[gamlss:gamlss]{gamlss}}, in
 particular \code{method}, with options \code{RS()}, \code{CG()} or \code{mixed()}.}
-
-\item{mu.link, sigma.link, xi.link}{Character scalars to set the respective
-link functions for the location, scale and shape parameters.}
 }
 \value{
 Returns a gamlss object. See the \strong{Value} section of

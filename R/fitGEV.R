@@ -11,7 +11,9 @@
 #'   of the first derivatives of the log-likelihood, leading to a quasi Newton
 #'   scoring algorithm.
 #' @param mu.link,sigma.link,xi.link Character scalars to set the respective
-#'   link functions for the location, scale and shape parameters.
+#'   link functions for the location (`mu`), scale (`sigma`) and shape (`xi`)
+#'   parameters. The latter is passed to [`gamlss`][`gamlss::gamlss`] as
+#'   `nu.link`.
 #' @param stepLength A numeric vector containing positive values. The initial
 #'    values of the step lengths `mu.step`, `sigma.step` and `nu.step` passed to
 #'   [`gamlss.control`][`gamlss::gamlss.control`] in the first attempt to fit
@@ -100,42 +102,46 @@
 #' }
 #' @export
 fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
-                   stepLength = 1, stepAttempts = 2, stepReduce = 2, ...) {
+                   mu.link = "identity", sigma.link = "log",
+                   xi.link = "identity", stepLength = 1, stepAttempts = 2,
+                   stepReduce = 2, ...) {
   # Check that one of the correct values of scoring has been supplied
   scoring <- match.arg(scoring)
-  # Choose the scoring algorithm and links
+  # Set the scoring algorithm and links
+  # For all the gamlss methods to work on the returned fitted model object, we
+  # need the call to gamlss::gamlss to include explicitly the names of the
+  # links for mu, sigma and nu (xi here) as character scalars.
+  # To achieve this, we create the internal function templateFit() and
+  # modify the body of this function to include the names of the link
+  # functions. This is rather clunky, but it works! Other attempts at passing
+  # the link functions do not work completely. For example, vcov.gamlss(object)
+  # does not work, because it performs calculations using the fitted model
+  # object and needs to know the link functions.
+  #
   # Fit using the supplied/default value of step length
   if (scoring == "fisher") {
-    mod <- try(gamlss::gamlss(formula = formula,
-                              family = GEVfisher(...),
-                              mu.step = stepLength, sigma.step = stepLength,
-                              nu.step = stepLength, data = data, ...),
-               silent = TRUE)
+    algor <- substitute(
+      GEVfisher(mu.link = mu.link, sigma.link = sigma.link, nu.link = xi.link)
+      )
   } else {
-    mod <- try(gamlss::gamlss(formula = formula,
-                              family = GEVquasiNewton(...),
+    algor <- substitute(
+      GEVquasi(mu.link = mu.link, sigma.link = sigma.link, nu.link = xi.link)
+      )
+  }
+  # Add the link functions to the call to gamlss() in fisherFit()
+  body(templateFit)[[2]] <- substitute(
+    mod <- try(gamlss::gamlss(formula = formula, family = algor,
                               mu.step = stepLength, sigma.step = stepLength,
                               nu.step = stepLength, data = data, ...),
                silent = TRUE)
-  }
-  # If an error is thrown then try again stepAttempts times, each  time reducing
-  # the step length by a factor of a half
+    )
+  mod <- templateFit(formula = formula, stepLength, data, ...)
+  # If an error is thrown then try again stepAttempts times, each time reducing
+  # the step length by a factor of a halfs
   isError <- inherits(mod, "try-error")
   while(isError & stepAttempts >= 1) {
     stepLength <- stepLength / stepReduce
-    if (scoring == "fisher") {
-      mod <- try(gamlss::gamlss(formula = formula,
-                                family = GEVfisher(...),
-                                mu.step = stepLength, sigma.step = stepLength,
-                                nu.step = stepLength, data = data, ...),
-                 silent = TRUE)
-    } else {
-      mod <- try(gamlss::gamlss(formula = formula,
-                                family = GEVquasiNewton(...),
-                                mu.step = stepLength, sigma.step = stepLength,
-                                nu.step = stepLength, data = data, ...),
-                 silent = TRUE)
-    }
+    mod <- templateFit(formula = formula, stepLength, data, ...)
     isError <- inherits(mod, "try-error")
     stepAttempts <- stepAttempts - 1L
   }
