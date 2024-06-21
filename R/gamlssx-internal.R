@@ -7,6 +7,19 @@
 #' @keywords internal
 NULL
 
+# ====================== Template GEV fitting function ====================== #
+
+#' @keywords internal
+#' @rdname gamlssx-internal
+templateFit <- function(formula, stepLength, data, ...) {
+  mod <- try(gamlss::gamlss(formula = formula,
+                            family = GEVfisher(),
+                            mu.step = stepLength, sigma.step = stepLength,
+                            nu.step = stepLength, data = data, ...),
+             silent = TRUE)
+  return(mod)
+}
+
 # =============== For calculating the GEV expected information ============== #
 
 # --------------------- Constants and helper functions ---------------------- #
