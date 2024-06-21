@@ -27,7 +27,7 @@ fitGEV(
 \item{scoring}{A character scalar. If \code{scoring = "fisher"} then the weights
 used in the fitting algorithm are based on the expected Fisher
 information, that is, a Fisher's scoring algorithm is used.
-If \verb{scoring = "quasi} then these weights are based on the cross products
+If \code{scoring = "quasi"} then these weights are based on the cross products
 of the first derivatives of the log-likelihood, leading to a quasi Newton
 scoring algorithm.}
 

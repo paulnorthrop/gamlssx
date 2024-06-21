@@ -7,7 +7,7 @@
 #' @param scoring A character scalar. If `scoring = "fisher"` then the weights
 #'   used in the fitting algorithm are based on the expected Fisher
 #'   information, that is, a Fisher's scoring algorithm is used.
-#'   If `scoring = "quasi` then these weights are based on the cross products
+#'   If `scoring = "quasi"` then these weights are based on the cross products
 #'   of the first derivatives of the log-likelihood, leading to a quasi Newton
 #'   scoring algorithm.
 #' @param mu.link,sigma.link,xi.link Character scalars to set the respective
