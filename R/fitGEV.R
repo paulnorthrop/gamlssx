@@ -27,7 +27,6 @@
 #'   lengths in `stepLength` are reduced for each extra attempt to fit the
 #'   model. The default, `stepReduce = 2` means that the step lengths are
 #'   halved for each extra attempt.
-#' @param eps Argument `eps` passed to [`gevExpInfo`].
 #' @param ... Further arguments passed to [`gamlss`][`gamlss::gamlss`], in
 #'   particular `method`, with options `RS()`, `CG()` or `mixed()`.
 #'
@@ -101,7 +100,7 @@
 #' }
 #' @export
 fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
-                   stepLength = 1, stepAttempts = 2, stepReduce = 2, eps, ...) {
+                   stepLength = 1, stepAttempts = 2, stepReduce = 2, ...) {
   # Check that one of the correct values of scoring has been supplied
   scoring <- match.arg(scoring)
   # Choose the scoring algorithm and links

@@ -11,7 +11,6 @@ fitGEV(
   stepLength = 1,
   stepAttempts = 2,
   stepReduce = 2,
-  eps,
   ...
 )
 }
@@ -49,8 +48,6 @@ no further attempts are made.}
 lengths in \code{stepLength} are reduced for each extra attempt to fit the
 model. The default, \code{stepReduce = 2} means that the step lengths are
 halved for each extra attempt.}
-
-\item{eps}{Argument \code{eps} passed to \code{\link{gevExpInfo}}.}
 
 \item{...}{Further arguments passed to \code{\link[gamlss:gamlss]{gamlss}}, in
 particular \code{method}, with options \code{RS()}, \code{CG()} or \code{mixed()}.}
