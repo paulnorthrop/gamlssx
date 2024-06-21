@@ -136,10 +136,6 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
                                 nu.step = stepLength, data = data, ...),
                  silent = TRUE)
     }
-#    mod <- try(gamlss::gamlss(formula = formula, family = algor,
-#                              mu.step = stepLength, sigma.step = stepLength,
-#                              nu.step = stepLength, data = data, ...),
-#               silent = TRUE)
     isError <- inherits(mod, "try-error")
     stepAttempts <- stepAttempts - 1L
   }
