@@ -169,8 +169,8 @@ GEVfisher <- function(mu.link = "identity", sigma.link = "log",
 
 #' @rdname GEV
 #' @export
-GEVquasiNewton <- function(mu.link = "identity", sigma.link = "log",
-                           nu.link = "identity") {
+GEVquasi <- function(mu.link = "identity", sigma.link = "log",
+                     nu.link = "identity") {
 
   mstats <- gamlss.dist::checklink("mu.link", "GEV", substitute(mu.link),
                                    c("1/mu^2", "log", "identity"))

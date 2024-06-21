@@ -3,7 +3,7 @@
 \name{GEV}
 \alias{GEV}
 \alias{GEVfisher}
-\alias{GEVquasiNewton}
+\alias{GEVquasi}
 \alias{dGEV}
 \alias{pGEV}
 \alias{qGEV}
@@ -12,7 +12,7 @@
 \usage{
 GEVfisher(mu.link = "identity", sigma.link = "log", nu.link = "identity")
 
-GEVquasiNewton(mu.link = "identity", sigma.link = "log", nu.link = "identity")
+GEVquasi(mu.link = "identity", sigma.link = "log", nu.link = "identity")
 
 dGEV(x, mu = 0, sigma = 1, nu = 0, log = FALSE)
 
