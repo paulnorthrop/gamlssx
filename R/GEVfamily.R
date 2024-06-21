@@ -1,9 +1,14 @@
-#' GEV family distribution for fitting a GAMLSS using Fisher's scoring
+#' GEV family distribution for fitting a GAMLSS
 #'
-#' The function `GEV` defines the generalized extreme value family
-#' distribution, a three parameter distribution, for a
-#' [`gamlss.family`][`gamlss.dist::gamlss.family`] object to be used in GAMLSS
-#' fitting using the function [`gamlss`][`gamlss::gamlss`]. The functions
+#' The functions `GEVfisher()` and `GEVquasi()` each define the generalized
+#' extreme value (GEV) family distribution, a three parameter distribution, for
+#' a [`gamlss.family`][`gamlss.dist::gamlss.family`] object to be used in GAMLSS
+#' fitting using the function [`gamlss`][`gamlss::gamlss`]. The only difference
+#' between `GEVfisher()` and `GEVquasi()` is the form of scoring method used to
+#' define the weights used in the fitting algorithm. Fisher's scoring,
+#' based on the expected Fisher information is used in `GEVfisher()`, whereas
+#' a quasi-Newton scoring, based on the cross products of the first derivatives
+#' of the log-likelihood, is used in `GEVquasi()`. The functions
 #' `dGEV`, `pGEV`, `qGEV` and `rGEV` define the density, distribution function,
 #' quantile function and random generation for the specific parameterization of
 #' the generalized extreme value distribution given in details below.
@@ -24,7 +29,7 @@
 #' @param n Number of observations. If `length(n) > 1`, the length is taken to
 #'   be the number required.
 #'
-#' @details Add details.
+#' @details
 #'
 #' * Refer to Chapter 3 of Coles (2001) and Jenkinson (1955).
 #' * GEV(\eqn{\mu, \sigma, \xi}). \eqn{\nu = \xi}.
@@ -32,9 +37,10 @@
 #' * Explain the initial estimates.
 #' * Add code for the mean and variance.
 #'
-#' @return `GEV()` returns a [`gamlss.family`][`gamlss.dist::gamlss.family`]
-#'   object which can be used to fit a generalized extreme value distribution
-#'   in the [`gamlss`][`gamlss::gamlss`] function. `dGEV()` gives the density,
+#' @return `GEVfisher()` and `GEVquasi()` each return a
+#'   [`gamlss.family`][`gamlss.dist::gamlss.family`] object which can be used
+#'   to fit a regression model with a GEV response distribution using the
+#'   [`gamlss`][`gamlss::gamlss`] function. `dGEV()` gives the density,
 #'   `pGEV()` gives the distribution function, `qGEV()` gives the quantile
 #'   function, and `rGEV()` generates random deviates.
 #' @seealso [`gamlss.family`][`gamlss.dist::gamlss.family`],
@@ -68,11 +74,11 @@
 #'  control = gamlss.control(mu.step = 0.5, sigma.step = 0.5, nu.step = 0.5))
 #  # 2 iterations of RS before switching to CG results in convergence
 #' modMixed <- gamlss(y ~ pb(x), family = GEV, data = data, method = mixed())
-#' @name GEVfisher
+#' @name GEV
 NULL
 ## NULL
 
-#' @rdname GEVfisher
+#' @rdname GEV
 #' @export
 GEVfisher <- function(mu.link = "identity", sigma.link = "log",
                       nu.link = "identity") {
@@ -161,28 +167,138 @@ GEVfisher <- function(mu.link = "identity", sigma.link = "log",
   )
 }
 
-#' @rdname GEVfisher
+#' @rdname GEV
+#' @export
+GEVquasiNewton <- function(mu.link = "identity", sigma.link = "log",
+                           nu.link = "identity") {
+
+  mstats <- gamlss.dist::checklink("mu.link", "GEV", substitute(mu.link),
+                                   c("1/mu^2", "log", "identity"))
+  dstats <- gamlss.dist::checklink("sigma.link", "GEV", substitute(sigma.link),
+                                   c("inverse", "log", "identity"))
+  vstats <- gamlss.dist::checklink("nu.link", "GEV",substitute(nu.link),
+                                   c("inverse", "log", "identity"))
+
+  structure(
+    list(family = c("GEV", "Generalized Extreme Value"),
+         parameters = list(mu = TRUE, sigma = TRUE, nu = TRUE),
+         nopar = 3,
+         type = "Continuous",
+         mu.link = as.character(substitute(mu.link)),
+         sigma.link = as.character(substitute(sigma.link)),
+         nu.link = as.character(substitute(nu.link)),
+         mu.linkfun = mstats$linkfun,
+         sigma.linkfun = dstats$linkfun,
+         nu.linkfun = vstats$linkfun,
+         mu.linkinv = mstats$linkinv,
+         sigma.linkinv = dstats$linkinv,
+         nu.linkinv = vstats$linkinv,
+         mu.dr = mstats$mu.eta,
+         sigma.dr = dstats$mu.eta,
+         nu.dr = vstats$mu.eta,
+         dldm = function(y, mu, sigma, nu) {
+           dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
+                             log = TRUE, deriv = TRUE)
+           dldm <- attr(dl, "gradient")[, "loc"]
+           return(dldm)
+         },
+         d2ldm2 = function(y, mu, sigma, nu) {
+           dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
+                             log = TRUE, deriv = TRUE)
+           dldm <- attr(dl, "gradient")[, "loc"]
+           dldm2 <- -dldm * dldm
+           return(dldm2)
+         },
+         dldd = function(y, mu, sigma, nu) {
+           dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
+                             log = TRUE, deriv = TRUE)
+           dldd <- attr(dl, "gradient")[, "scale"]
+           return(dldd)
+         },
+         d2ldd2 = function(y, mu, sigma, nu) {
+           dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
+                             log = TRUE, deriv = TRUE)
+           dldd <- attr(dl, "gradient")[, "scale"]
+           dldd2 <- -dldd * dldd
+           return(dldd2)
+         },
+         dldv = function(y, mu, sigma, nu) {
+           dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
+                             log = TRUE, deriv = TRUE)
+           dldv <- attr(dl, "gradient")[, "shape"]
+           return(dldv)
+         },
+         d2ldv2 = function(y, mu, sigma, nu) {
+           dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
+                             log = TRUE, deriv = TRUE)
+           dldv <- attr(dl, "gradient")[, "shape"]
+           dldv2 <- -dldv * dldv
+           return(dldv2)
+         },
+         d2ldmdd = function(y, mu, sigma, nu) {
+           dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
+                             log = TRUE, deriv = TRUE)
+           dldm <- attr(dl, "gradient")[, "loc"]
+           dldd <- attr(dl, "gradient")[, "scale"]
+           dldmdd <- -dldm * dldd
+           return(dldmdd)
+         },
+         d2ldmdv = function(y, mu, sigma, nu) {
+           dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
+                             log = TRUE, deriv = TRUE)
+           dldm <- attr(dl, "gradient")[, "loc"]
+           dldv <- attr(dl, "gradient")[, "shape"]
+           dldmdv <- -dldm * dldv
+           return(dldmdv)
+         },
+         d2ldddv = function(y, mu, sigma, nu) {
+           dl <- nieve::dGEV(x = y, loc = mu, scale = sigma, shape = nu,
+                             log = TRUE, deriv = TRUE)
+           dldd <- attr(dl, "gradient")[, "scale"]
+           dldv <- attr(dl, "gradient")[, "shape"]
+           dldddv <- -dldd * dldv
+           return(dldddv)
+         },
+         G.dev.incr  = function(y, mu, sigma, nu,...) {
+           val <- -2 * dGEV(x = y, mu = mu, sigma = sigma, nu = nu, log = TRUE)
+           return(val)
+         },
+         rqres = expression(rqres(pfun = "pGEV", type = "Continuous",
+                                  y = y, mu = mu, sigma = sigma, nu = nu)),
+         mu.initial = expression(mu <- y + 0.45 * sd(y)),
+         sigma.initial = expression(sigma <- rep(0.78 * sd(y), length(y))),
+         nu.initial = expression(nu <- rep(0.1, length(y))),
+         mu.valid = function(mu) TRUE,
+         sigma.valid = function(sigma) all(sigma > 0),
+         nu.valid = function(nu) all(nu > -0.5),
+         y.valid = function(y) TRUE
+    ),
+    class = c("gamlss.family","family")
+  )
+}
+
+#' @rdname GEV
 #' @export
 dGEV <- function(x, mu = 0, sigma = 1, nu = 0, log = FALSE) {
   return(nieve::dGEV(x = x, loc = mu, scale = sigma, shape = nu,
                      log = log))
 }
 
-#' @rdname GEVfisher
+#' @rdname GEV
 #' @export
 pGEV <- function(q, mu = 0, sigma = 1, nu = 0, lower.tail = TRUE,
                  log.p = FALSE) {
   return(nieve::pGEV(q = q, loc = mu, scale = sigma, shape = nu))
 }
 
-#' @rdname GEVfisher
+#' @rdname GEV
 #' @export
 qGEV <- function(p, mu = 0, sigma = 1, nu = 0, lower.tail = TRUE,
                  log.p = FALSE) {
   return(nieve::qGEV(p = p, loc = mu, scale = sigma, shape = nu))
 }
 
-#' @rdname GEVfisher
+#' @rdname GEV
 #' @export
 rGEV <- function(n, mu = 0, sigma = 1, nu = 0) {
   return(nieve::rGEV(n = n, loc = mu, scale = sigma, shape = nu))
