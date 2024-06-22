@@ -61,9 +61,8 @@ halved for each extra attempt.}
 particular \code{method}, which sets the fitting algorithm, with options
 \code{RS()}, \code{CG()} or \code{mixed()}. The default, \code{method = RS()} seems to work
 well, as does \code{method = mixed()}. In contrast, \code{method = CG()} often
-results in lack of convergence, even after the iterative adjustments to
-the step lengths made in \code{fitGEV()}.  Therefore, it may be best to avoid
-using \code{method = CG()}.}
+requires the step length to be reduced before convergence is achieved.
+\code{fitGEV()} attempts to do this automatically. See \code{stepAttemmpts}.}
 }
 \value{
 Returns a gamlss object. See the \strong{Value} section of
