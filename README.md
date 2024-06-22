@@ -64,13 +64,13 @@ fremantle <- transform(fremantle, cYear = Year - median(Year))
 plot(fremantle$Year, fremantle$SeaLevel, xlab = "year", ylab = "sea level (m)")
 ```
 
-![](README-unnamed-chunk-2-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 ``` r
 plot(fremantle$SOI, fremantle$SeaLevel, xlab = "SOI", ylab = "sea level (m)")
 ```
 
-![](README-unnamed-chunk-2-2.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-2-2.png" width="100%" />
 
 ``` r
 # Fit a model with P-spline effects of cYear and SOI on location and scale
@@ -157,7 +157,7 @@ summary(mod)
 plot(mod)
 ```
 
-![](README-unnamed-chunk-2-3.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-2-3.png" width="100%" />
 
     #> ******************************************************************
     #>        Summary of the Quantile Residuals
@@ -174,13 +174,13 @@ plot(mod)
 term.plot(mod, rug = TRUE, pages = 1)
 ```
 
-![](README-unnamed-chunk-2-4.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-2-4.png" width="100%" />
 
 ``` r
 term.plot(mod, what = "sigma", pages = 1)
 ```
 
-![](README-unnamed-chunk-2-5.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-2-5.png" width="100%" />
 
 ## Installation
 
