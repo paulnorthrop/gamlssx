@@ -8,6 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  fig.path = "man/figures/README-",
   fig.path = "README-"
 )
 ```
@@ -23,3 +24,42 @@ knitr::opts_chunk$set(
 
 ## Generalised Additive Extreme Value Models for Location, Scale and Shape
 
+The main aim of the `gamlssx` package is to enable a generalized extreme value (GEV) to be used as the response distribution in a generalized additive model for location scale and shape (GAMLSS), as implemented in the [`gamlss` R package](https://cran.r-project.org/package=gamlss). See [Rigby and Stasinopoulos (2005)](https://doi.org/10.1111%2Fj.1467-9876.2005.00510.x) and the [gamlss home page](https://www.gamlss.com/) for details of the methodology. See also Gavin Simpson's blog post [Modelling extremes using generalized additive models](https://fromthebottomoftheheap.net/2017/01/25/modelling-extremes-with-gams/) for an overview of the use of GAMs for modelling extreme values, which uses the [mgcv R package](https://cran.r-project.org/package=mgcv) to fit similar models and notes that the [VGAM R package](https://cran.r-project.org/package=VGAM) can also be used.
+
+## An example
+
+We consider the `fremantle` data include in the `gamlssx` package, which is a copy of data of the same name from the [`ismev` R package]((https://cran.r-project.org/package=gamlss)). These data contain 86 annual maximum seas levels recorded at Fremantle, Australia during 1987-1989. In addition to the year of each sea level, we have available the value of the Southern Oscillation Inde (SOI). We use `gamlssx`'s `fitGEV()` function to fit a model to these data that is similar to the first one fitted, to the same data, in Gavin Simpson's blog post. 
+
+The `fitGEV()` function calls the function `gamlss::gamlss()`, which offers 3 fitting algorithms: `RS` (Rigby and Stasinopoulos), `CG` (Cole and Green) and `mixed` (`RS` initially followed by `CG`). In the code below, we use the default `RS` algorithm. `fitGEV()` offers 2 scoring methods to calculate the weights used in the algorithm. Here, we use the default, Fisher's scoring, based on the expected Fisher information. The code below does not do justice to the functionality of the `gamlss` package.  See the [GAMLSS books](https://www.gamlss.com/books-vignettes/) for more information. We use the `gamlss()`The function `fitGEV()` can 
+
+```{r, message = FALSE}
+# Load gamlss, for the function pb()
+library(gamlss)
+# Load gamlssx
+library(gamlssx)
+# Transform Year so that it is centred on 0 
+fremantle <- transform(fremantle, cYear = Year - median(Year))
+# Plot sea level against year and against SOI
+plot(fremantle$Year, fremantle$SeaLevel, xlab = "year", ylab = "sea level (m)")
+plot(fremantle$SOI, fremantle$SeaLevel, xlab = "SOI", ylab = "sea level (m)")
+# Fit a model with P-spline effects of cYear and SOI on location and scale
+# The default links are indentity for location and log for scale
+mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), 
+              sigma.formula = ~ pb(cYear) + pb(SOI), 
+              data = fremantle)
+# Summary of model fit
+summary(mod)
+# Model diagnostic plots
+plot(mod)
+# Plot of the fitted component smooth functions
+# Note: gamlssx::term.plot() does not include uncertainty about the intercept
+term.plot(mod, rug = TRUE, pages = 1)
+term.plot(mod, what = "sigma", pages = 1)
+```
+
+## Installation
+
+To get the current released version from CRAN:
+
+```{r installation, eval = FALSE}
+install.packages("gamlssx")
