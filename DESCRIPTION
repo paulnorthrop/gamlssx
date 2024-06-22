@@ -19,7 +19,6 @@ Encoding: UTF-8
 Depends:
     R (>= 3.3.0)
 Suggests: 
-    ismev,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
