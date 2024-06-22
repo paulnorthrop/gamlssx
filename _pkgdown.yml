@@ -1,6 +1,8 @@
 url: https://paulnorthrop.github.io/gamlssx/
+
 template:
-  bootstrap: 5
+  params:
+    bootswatch: paper
 
 development:
   mode: release
