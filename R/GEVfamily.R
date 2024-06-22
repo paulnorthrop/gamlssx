@@ -154,7 +154,12 @@ GEVfisher <- function(mu.link = "identity", sigma.link = "log",
         },
               rqres = expression(rqres(pfun = "pGEV", type = "Continuous",
                                        y = y, mu = mu, sigma = sigma, nu = nu)),
-         mu.initial = expression(mu <- y + 0.45 * sd(y)),
+# sqrt(6) / pi is approximately 0.78
+# 0.57722 * sqrt(6) / pi is approximately 0.45
+# The gamlss.dist::RGE() code had a typo in mu.intital + 0.45 should be - 0.45
+# The next (commented out) line starts from a crude stationary fit
+#         mu.initial = expression(mu <- rep(mean(y) - 0.45 * sd(y), length(y))),
+         mu.initial = expression(mu <- y - 0.45 * sd(y)),
       sigma.initial = expression(sigma <- rep(0.78 * sd(y), length(y))),
          nu.initial = expression(nu <- rep(0.1, length(y))),
            mu.valid = function(mu) TRUE,
