@@ -1,0 +1,22 @@
+url: https://paulnorthrop.github.io/gamlssx/
+template:
+  bootstrap: 5
+
+development:
+  mode: release
+
+reference:
+  - title: Package
+    desc: ~
+    contents:
+      - "gamlssx"
+  - title: Main functions
+    desc: ~
+    contents:
+      - "fitGEV"
+      - "GEV"
+      - "gevExpInfo"
+  - title: Example data
+    desc: ~
+    contents:
+      - "fremantle"
