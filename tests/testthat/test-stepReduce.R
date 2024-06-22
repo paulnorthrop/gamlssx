@@ -38,3 +38,11 @@ test_that("RS logLik equals CG logLik", {
 test_that("RS estimates equal CG estimates", {
   testthat::expect_equal(RSestimates, CGestimates, tolerance = tol)
 })
+
+# For this example, we need extra attempts if using the CG algorithm
+# Set (extra) stepAttempts to 0 to see this
+
+# Fit model using the CG method
+test_that("CG needs extra iterations with a reduced step length", {
+  testthat::expect_error(fitGEV(y ~ gamlss::pb(x), data = data, method = CG(), stepAttempts = 0))
+})
