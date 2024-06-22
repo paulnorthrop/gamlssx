@@ -58,7 +58,12 @@ model. The default, \code{stepReduce = 2} means that the step lengths are
 halved for each extra attempt.}
 
 \item{...}{Further arguments passed to \code{\link[gamlss:gamlss]{gamlss}}, in
-particular \code{method}, with options \code{RS()}, \code{CG()} or \code{mixed()}.}
+particular \code{method}, which sets the fitting algorithm, with options
+\code{RS()}, \code{CG()} or \code{mixed()}. The default, \code{method = RS()} seems to work
+well, as does \code{method = mixed()}. In contrast, \code{method = CG()} often
+results in lack of convergence, even after the iterative adjustments to
+the step lengths made in \code{fitGEV()}.  Therefore, it may be best to avoid
+using \code{method = CG()}.}
 }
 \value{
 Returns a gamlss object. See the \strong{Value} section of

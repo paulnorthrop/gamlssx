@@ -30,7 +30,11 @@
 #'   model. The default, `stepReduce = 2` means that the step lengths are
 #'   halved for each extra attempt.
 #' @param ... Further arguments passed to [`gamlss`][`gamlss::gamlss`], in
-#'   particular `method`, with options `RS()`, `CG()` or `mixed()`.
+#'   particular `method`, which sets the fitting algorithm, with options
+#'   `RS()`, `CG()` or `mixed()`. The default, `method = RS()` seems to work
+#'   well, as does `method = mixed()`. In contrast, `method = CG()` often
+#'   requires the step length to be reduced before convergence is achieved.
+#'   `fitGEV()` attempts to do this automatically. See `stepAttemmpts`.
 #'
 #' @details Add details. Explain `stepAttempts` in more detail.
 #'
@@ -125,15 +129,16 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
   }
   # Add the link functions to the call to gamlss() in fisherFit()
   templateFit <- function(formula, stepLength, data, ...) {
-    mod <- NULL
-    return(mod)
+    x <- NULL
+    return(x)
   }
   body(templateFit)[[2]] <- substitute(
-    mod <- try(gamlss::gamlss(formula = formula, family = algor,
-                              mu.step = stepLength, sigma.step = stepLength,
-                              nu.step = stepLength, data = data, ...),
-               silent = TRUE)
+    x <- try(gamlss::gamlss(formula = formula, family = algor,
+                            mu.step = stepLength, sigma.step = stepLength,
+                            nu.step = stepLength, data = data, ...),
+             silent = TRUE)
     )
+  cat("stepLength = ", stepLength, "\n")
   mod <- templateFit(formula = formula, stepLength = stepLength, data = data,
                      ...)
   # If an error is thrown then try again stepAttempts times, each time reducing
@@ -141,9 +146,21 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
   isError <- inherits(mod, "try-error")
   while(isError & stepAttempts >= 1) {
     stepLength <- stepLength / stepReduce
-    mod <- templateFit(formula = formula, stepLength, data, ...)
+    cat("stepLength = ", stepLength, "\n")
+    # We need to update the value of stepLength in templateFit()
+    body(templateFit)[[2]] <- substitute(
+      x <- try(gamlss::gamlss(formula = formula, family = algor,
+                              mu.step = stepLength, sigma.step = stepLength,
+                              nu.step = stepLength, data = data, ...),
+               silent = TRUE)
+    )
+    mod <- templateFit(formula = formula, stepLength = stepLength, data = data,
+                       ...)
     isError <- inherits(mod, "try-error")
     stepAttempts <- stepAttempts - 1L
+  }
+  if (isError) {
+    stop("No convergence. An error was thrown from the last call to gamlss()")
   }
   class(mod) <- c("gamlssx", class(mod))
   return(mod)
