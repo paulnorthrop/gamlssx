@@ -2,7 +2,7 @@
 % Please edit documentation in R/fitGEV.R
 \name{fitGEV}
 \alias{fitGEV}
-\title{Fit a Generalized Extreme value (GEV) GAMLSS model}
+\title{Fit a Generalized Extreme value (GEV) GAMLSS Model}
 \usage{
 fitGEV(
   formula,

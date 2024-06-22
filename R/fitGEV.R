@@ -1,4 +1,4 @@
-#' Fit a Generalized Extreme value (GEV) GAMLSS model
+#' Fit a Generalized Extreme value (GEV) GAMLSS Model
 #'
 #' Describe
 #'
