@@ -13,7 +13,9 @@ xi <- 0.25
 y <- gamlssx::rGEV(n = 1, mu = mu, sigma = sigma, nu = xi)
 data <- data.frame(y = as.numeric(y), x = x)
 
-# Fit model using the default RS method
+# Fisher's scoring
+
+## Fit model using the default RS method
 modRS <- fitGEV(y ~ gamlss::pb(x), data = data)
 print(modRS)
 muhat <- modRS$mu.coefficients
@@ -24,6 +26,35 @@ loglikRS <- logLik(modRS)
 
 # Fit model using the CG method
 modCG <- fitGEV(y ~ gamlss::pb(x), data = data, method = CG())
+muhat <- modCG$mu.coefficients
+sigmahat <- exp(modCG$sigma.coefficients)
+xihat <- modCG$nu.coefficients
+CGestimates <- as.numeric(c(muhat, sigmahat, xihat))
+loglikCG <- logLik(modCG)
+
+
+test_that("RS logLik equals CG logLik", {
+  testthat::expect_equal(loglikRS, loglikCG, tolerance = tol)
+})
+
+test_that("RS estimates equal CG estimates", {
+  testthat::expect_equal(RSestimates, CGestimates, tolerance = tol)
+})
+
+# Quasi-Newton scoring
+
+## Fit model using the default RS method
+modRS <- fitGEV(y ~ gamlss::pb(x), data = data, scoring = "quasi")
+print(modRS)
+muhat <- modRS$mu.coefficients
+sigmahat <- exp(modRS$sigma.coefficients)
+xihat <- modRS$nu.coefficients
+RSestimates <- as.numeric(c(muhat, sigmahat, xihat))
+loglikRS <- logLik(modRS)
+
+# Fit model using the CG method
+modCG <- fitGEV(y ~ gamlss::pb(x), data = data, method = CG(),
+                scoring = "quasi")
 muhat <- modCG$mu.coefficients
 sigmahat <- exp(modCG$sigma.coefficients)
 xihat <- modCG$nu.coefficients
