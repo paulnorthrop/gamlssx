@@ -26,9 +26,9 @@ offer reversed GEV distribution via in `RGE` family, but (a) this is not
 the usual parameterization of a GEV distribution (for block maxima), and
 (b) in `RGE`, the shape parameter is restricted to have a particular
 sign, which is undesirable. The `gamlssx` package uses the usual
-parameterization and only restricts the shape parameter $\xi$ to be
-greater than $-1/2$, which is necessary for the usual likelihood theory
-to be applicable.
+parameterization, with a shape parameter $\xi$, and imposes only the
+restrictions $\xi > -1/2$, which is necessary for the usual likelihood
+theory to be applicable.
 
 See [Rigby and Stasinopoulos
 (2005)](https://doi.org/10.1111%2Fj.1467-9876.2005.00510.x) and the
