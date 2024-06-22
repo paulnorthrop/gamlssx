@@ -70,7 +70,6 @@
 #' # Fit model using the CG method
 #' mod <- fitGEV(y ~ pb(x), data = data, method = CG())
 #'
-#' data(fremantle, package = "ismev")
 #' # Transform Year
 #' fremantle <- transform(fremantle, cYear = Year - median(Year))
 #'
@@ -129,14 +128,15 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
   }
   # Add the link functions to the call to gamlss() in fisherFit()
   templateFit <- function(formula, stepLength, data, ...) {
-    x <- NULL
-    return(x)
+    dangerous <- NULL
+    return(dangerous)
   }
   body(templateFit)[[2]] <- substitute(
-    x <- try(gamlss::gamlss(formula = formula, family = algor,
-                            mu.step = stepLength, sigma.step = stepLength,
-                            nu.step = stepLength, data = data, ...),
-             silent = TRUE)
+    dangerous <- try(gamlss::gamlss(formula = formula, family = algor,
+                                    mu.step = stepLength,
+                                    sigma.step = stepLength,
+                                    nu.step = stepLength, data = data, ...),
+                     silent = TRUE)
     )
   cat("stepLength = ", stepLength, "\n")
   mod <- templateFit(formula = formula, stepLength = stepLength, data = data,
@@ -149,10 +149,11 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
     cat("stepLength = ", stepLength, "\n")
     # We need to update the value of stepLength in templateFit()
     body(templateFit)[[2]] <- substitute(
-      x <- try(gamlss::gamlss(formula = formula, family = algor,
-                              mu.step = stepLength, sigma.step = stepLength,
-                              nu.step = stepLength, data = data, ...),
-               silent = TRUE)
+      dangerous <- try(gamlss::gamlss(formula = formula, family = algor,
+                                      mu.step = stepLength,
+                                      sigma.step = stepLength,
+                                      nu.step = stepLength, data = data, ...),
+                       silent = TRUE)
     )
     mod <- templateFit(formula = formula, stepLength = stepLength, data = data,
                        ...)

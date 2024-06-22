@@ -102,7 +102,6 @@ mod <- fitGEV(y ~ pb(x), data = data, method = mixed())
 # Fit model using the CG method
 mod <- fitGEV(y ~ pb(x), data = data, method = CG())
 
-data(fremantle, package = "ismev")
 # Transform Year
 fremantle <- transform(fremantle, cYear = Year - median(Year))
 
