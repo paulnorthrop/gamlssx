@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Generalised Additive Extreme Value Models for Location, Scale and Shape">
-<meta property="og:description" content="Functions for fitting generalized additive models for the location, scale and shape parameters of a Generalized Extreme Value distribution. The methodology is based on Rigby and Stasinopoulos (2005), &lt;doi:10.1111/j.1467-9876.2005.00510.x&gt; and implemented using functions from the gamlss package &lt;https://cran.r-project.org/package=gamlss&gt;.">
+<meta property="og:description" content="Functions for fitting generalized additive models for the location, scale and shape parameters of a generalized extreme value distribution. The methodology is based on Rigby and Stasinopoulos (2005), &lt;doi:10.1111/j.1467-9876.2005.00510.x&gt; and implemented using functions from the gamlss package &lt;https://cran.r-project.org/package=gamlss&gt;.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -69,6 +69,129 @@
 <div class="section level2">
 <h2 id="generalised-additive-extreme-value-models-for-location-scale-and-shape">Generalised Additive Extreme Value Models for Location, Scale and Shape<a class="anchor" aria-label="anchor" href="#generalised-additive-extreme-value-models-for-location-scale-and-shape"></a>
 </h2>
+<p>The main aim of the <code>gamlssx</code> package is to enable a generalized extreme value (GEV) to be used as the response distribution in a generalized additive model for location scale and shape (GAMLSS), as implemented in the <a href="https://cran.r-project.org/package=gamlss" class="external-link"><code>gamlss</code> R package</a>. See <a href="https://doi.org/10.1111%2Fj.1467-9876.2005.00510.x" class="external-link">Rigby and Stasinopoulos (2005)</a> and the <a href="https://www.gamlss.com/" class="external-link">gamlss home page</a> for details of the methodology. See also Gavin Simpson’s blog post <a href="https://fromthebottomoftheheap.net/2017/01/25/modelling-extremes-with-gams/" class="external-link">Modelling extremes using generalized additive models</a> for an overview of the use of GAMs for modelling extreme values, which uses the <a href="https://cran.r-project.org/package=mgcv" class="external-link">mgcv R package</a> to fit similar models and notes that the <a href="https://cran.r-project.org/package=VGAM" class="external-link">VGAM R package</a> can also be used.</p>
+</div>
+<div class="section level2">
+<h2 id="an-example">An example<a class="anchor" aria-label="anchor" href="#an-example"></a>
+</h2>
+<p>We consider the <code>fremantle</code> data include in the <code>gamlssx</code> package, which is a copy of data of the same name from the <a href="(https://cran.r-project.org/package=gamlss)" class="external-link"><code>ismev</code> R package</a>. These data contain 86 annual maximum seas levels recorded at Fremantle, Australia during 1987-1989. In addition to the year of each sea level, we have available the value of the Southern Oscillation Inde (SOI). We use <code>gamlssx</code>’s <code><a href="reference/fitGEV.html">fitGEV()</a></code> function to fit a model to these data that is similar to the first one fitted, to the same data, in Gavin Simpson’s blog post.</p>
+<p>The <code><a href="reference/fitGEV.html">fitGEV()</a></code> function calls the function <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code>, which offers 3 fitting algorithms: <code>RS</code> (Rigby and Stasinopoulos), <code>CG</code> (Cole and Green) and <code>mixed</code> (<code>RS</code> initially followed by <code>CG</code>). In the code below, we use the default <code>RS</code> algorithm. <code><a href="reference/fitGEV.html">fitGEV()</a></code> offers 2 scoring methods to calculate the weights used in the algorithm. Here, we use the default, Fisher’s scoring, based on the expected Fisher information. The code below does not do justice to the functionality of the <code>gamlss</code> package. See the <a href="https://www.gamlss.com/books-vignettes/" class="external-link">GAMLSS books</a> for more information. We use the <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss()</a></code>The function <code><a href="reference/fitGEV.html">fitGEV()</a></code> can</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load gamlss, for the function pb()</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.gamlss.com/" class="external-link">gamlss</a></span><span class="op">)</span></span>
+<span><span class="co"># Load gamlssx</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paulnorthrop.github.io/gamlssx/" class="external-link">gamlssx</a></span><span class="op">)</span></span>
+<span><span class="co"># Transform Year so that it is centred on 0 </span></span>
+<span><span class="va">fremantle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">fremantle</span>, cYear <span class="op">=</span> <span class="va">Year</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">Year</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Plot sea level against year and against SOI</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">Year</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span>, xlab <span class="op">=</span> <span class="st">"year"</span>, ylab <span class="op">=</span> <span class="st">"sea level (m)"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README-unnamed-chunk-2-1.png"><!-- --></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">SOI</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span>, xlab <span class="op">=</span> <span class="st">"SOI"</span>, ylab <span class="op">=</span> <span class="st">"sea level (m)"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README-unnamed-chunk-2-2.png"><!-- --></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Fit a model with P-spline effects of cYear and SOI on location and scale</span></span>
+<span><span class="co"># The default links are indentity for location and log for scale</span></span>
+<span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fitGEV.html">fitGEV</a></span><span class="op">(</span><span class="va">SeaLevel</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">cYear</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">SOI</span><span class="op">)</span>, </span>
+<span>              sigma.formula <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">cYear</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">SOI</span><span class="op">)</span>, </span>
+<span>              data <span class="op">=</span> <span class="va">fremantle</span><span class="op">)</span></span>
+<span><span class="co">#&gt; stepLength =  1 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 1: Global Deviance = -112.2422 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 2: Global Deviance = -117.4965 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 3: Global Deviance = -118.3007 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 4: Global Deviance = -118.6081 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 5: Global Deviance = -118.7582 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 6: Global Deviance = -118.8344 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 7: Global Deviance = -118.8731 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 8: Global Deviance = -118.8987 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 9: Global Deviance = -118.9102 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 10: Global Deviance = -118.9188 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 11: Global Deviance = -118.9258 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 12: Global Deviance = -118.9269 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 13: Global Deviance = -118.9351 </span></span>
+<span><span class="co">#&gt; GAMLSS-RS iteration 14: Global Deviance = -118.9359</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Summary of model fit</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ******************************************************************</span></span>
+<span><span class="co">#&gt; Family:  c("GEV", "Generalized Extreme Value") </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:  gamlss::gamlss(formula = SeaLevel ~ pb(cYear) + pb(SOI),  </span></span>
+<span><span class="co">#&gt;     sigma.formula = ~pb(cYear) + pb(SOI), family = GEVfisher(mu.link = "identity",  </span></span>
+<span><span class="co">#&gt;         sigma.link = "log", nu.link = "identity"),  </span></span>
+<span><span class="co">#&gt;     data = fremantle, mu.step = 1, sigma.step = 1,      nu.step = 1) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fitting method: RS() </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Mu link function:  identity</span></span>
+<span><span class="co">#&gt; Mu Coefficients:</span></span>
+<span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept) 1.5007933  0.0149733 100.231  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; pb(cYear)   0.0019490  0.0004982   3.912 0.000195 ***</span></span>
+<span><span class="co">#&gt; pb(SOI)     0.0680347  0.0174751   3.893 0.000208 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Sigma link function:  log</span></span>
+<span><span class="co">#&gt; Sigma Coefficients:</span></span>
+<span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept) -2.128696   0.088447 -24.068   &lt;2e-16 ***</span></span>
+<span><span class="co">#&gt; pb(cYear)   -0.004574   0.002614  -1.750   0.0841 .  </span></span>
+<span><span class="co">#&gt; pb(SOI)      0.275258   0.112736   2.442   0.0169 *  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Nu link function:  identity </span></span>
+<span><span class="co">#&gt; Nu Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span><span class="co">#&gt; (Intercept) -0.25619    0.08582  -2.985  0.00379 **</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; NOTE: Additive smoothing terms exist in the formulas: </span></span>
+<span><span class="co">#&gt;  i) Std. Error for smoothers are for the linear effect only. </span></span>
+<span><span class="co">#&gt; ii) Std. Error for the linear terms maybe are not accurate. </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; No. of observations in the fit:  86 </span></span>
+<span><span class="co">#&gt; Degrees of Freedom for the fit:  8.375675</span></span>
+<span><span class="co">#&gt;       Residual Deg. of Freedom:  77.62432 </span></span>
+<span><span class="co">#&gt;                       at cycle:  14 </span></span>
+<span><span class="co">#&gt;  </span></span>
+<span><span class="co">#&gt; Global Deviance:     -118.9359 </span></span>
+<span><span class="co">#&gt;             AIC:     -102.1846 </span></span>
+<span><span class="co">#&gt;             SBC:     -81.62773 </span></span>
+<span><span class="co">#&gt; ******************************************************************</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Model diagnostic plots</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README-unnamed-chunk-2-3.png"><!-- --></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#&gt; ******************************************************************</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt;        Summary of the Quantile Residuals</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt;                            mean   =  -0.006109438 </span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;                        variance   =  1.036755 </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;                coef. of skewness  =  0.09394729 </span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt;                coef. of kurtosis  =  2.322565 </span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; Filliben correlation coefficient  =  0.9951795 </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; ******************************************************************</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Plot of the fitted component smooth functions</span></span>
+<span><span class="co"># Note: gamlssx::term.plot() does not include uncertainty about the intercept</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/term.plot.html" class="external-link">term.plot</a></span><span class="op">(</span><span class="va">mod</span>, rug <span class="op">=</span> <span class="cn">TRUE</span>, pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README-unnamed-chunk-2-4.png"><!-- --></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/term.plot.html" class="external-link">term.plot</a></span><span class="op">(</span><span class="va">mod</span>, what <span class="op">=</span> <span class="st">"sigma"</span>, pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README-unnamed-chunk-2-5.png"><!-- --></p>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>To get the current released version from CRAN:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"gamlssx"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>

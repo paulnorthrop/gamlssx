@@ -156,6 +156,7 @@ requires the step length to be reduced before convergence is achieved.
 <span class="r-in"><span><span class="va">xi</span> <span class="op">&lt;-</span> <span class="fl">0.25</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">nieve</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nieve/man/GEV.html" class="external-link">rGEV</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1</span>, loc <span class="op">=</span> <span class="va">mu</span>, scale <span class="op">=</span> <span class="va">sigma</span>, shape <span class="op">=</span> <span class="va">xi</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="fitGEV-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.gamlss.com/" class="external-link">gamlss</a></span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: splines</span>
@@ -172,7 +173,6 @@ requires the step length to be reduced before convergence is achieved.
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  **********   GAMLSS Version 5.4-12  ********** </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> For more on GAMLSS look at https://www.gamlss.com/</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Type gamlssNews() to see new features/changes/bug fixes.</span>
-<span class="r-plt img"><img src="fitGEV-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit model using the default RS method</span></span></span>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span></span>
