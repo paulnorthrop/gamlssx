@@ -129,6 +129,10 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
       )
   }
   # Add the link functions to the call to gamlss() in fisherFit()
+  templateFit <- function(formula, stepLength, data, ...) {
+    mod <- NULL
+    return(mod)
+  }
   body(templateFit)[[2]] <- substitute(
     mod <- try(gamlss::gamlss(formula = formula, family = algor,
                               mu.step = stepLength, sigma.step = stepLength,
