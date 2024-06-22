@@ -1,4 +1,11 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^books$
-^GEV2\.R$
+^README\.Rmd$
+^appveyor\.yml$
+^cran-comments\.md$
+^_pkgdown\.yml$
+^docs$
+^\.github$
+^\.Rdata$
+^\.Rhistory$
