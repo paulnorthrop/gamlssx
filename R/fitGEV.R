@@ -66,40 +66,35 @@
 #' # Fit model using the CG method
 #' mod <- fitGEV(y ~ pb(x), data = data, method = CG())
 #'
-#' # Fremantle data from the ismev package
-#' ismev <- requireNamespace("ismev", quietly = TRUE)
+#' data(fremantle, package = "ismev")
+#' # Transform Year
+#' fremantle <- transform(fremantle, cYear = Year - median(Year))
 #'
-#' if (ismev) {
-#'   data(fremantle, package = "ismev")
-#'   # Transform Year
-#'   fremantle <- transform(fremantle, cYear = Year - median(Year))
+#' mod <- fitGEV(SeaLevel ~ pb(SOI), data = fremantle)
+#' plot(fremantle$SOI, fremantle$SeaLevel)
+#' lines(fremantle$SOI, fitted(mod))
 #'
-#'   mod <- fitGEV(SeaLevel ~ pb(SOI), data = fremantle)
-#'   plot(fremantle$SOI, fremantle$SeaLevel)
-#'   lines(fremantle$SOI, fitted(mod))
+#' mod <- fitGEV(SeaLevel ~ pb(cYear), data = fremantle)
+#' plot(fremantle$cYear, fremantle$SeaLevel)
+#' lines(fremantle$cYear, fitted(mod))
 #'
-#'   mod <- fitGEV(SeaLevel ~ pb(cYear), data = fremantle)
-#'   plot(fremantle$cYear, fremantle$SeaLevel)
-#'   lines(fremantle$cYear, fitted(mod))
+#' mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), data = fremantle)
+#' plot(fremantle$cYear, fremantle$SeaLevel)
+#' lines(fremantle$cYear, fitted(mod))
 #'
-#'   mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), data = fremantle)
-#'   plot(fremantle$cYear, fremantle$SeaLevel)
-#'   lines(fremantle$cYear, fitted(mod))
+#' mod <- fitGEV(SeaLevel ~ SOI, data = fremantle)
+#' plot(fremantle$SOI, fremantle$SeaLevel)
+#' lines(fremantle$SOI, fitted(mod))
 #'
-#'   mod <- fitGEV(SeaLevel ~ SOI, data = fremantle)
-#'   plot(fremantle$SOI, fremantle$SeaLevel)
-#'   lines(fremantle$SOI, fitted(mod))
+#' mod <- fitGEV(SeaLevel ~ cYear, data = fremantle)
+#' plot(fremantle$cYear, fremantle$SeaLevel)
+#' lines(fremantle$cYear, fitted(mod))
 #'
-#'   mod <- fitGEV(SeaLevel ~ cYear, data = fremantle)
-#'   plot(fremantle$cYear, fremantle$SeaLevel)
-#'   lines(fremantle$cYear, fitted(mod))
-#'
-#'   mod <- fitGEV(SeaLevel ~ SOI + cYear, data = fremantle)
-#'   plot(fremantle$SOI, fremantle$SeaLevel)
-#'   lines(fremantle$SOI, fitted(mod))
-#'   plot(fremantle$cYear, fremantle$SeaLevel)
-#'   lines(fremantle$cYear, fitted(mod))
-#' }
+#' mod <- fitGEV(SeaLevel ~ SOI + cYear, data = fremantle)
+#' plot(fremantle$SOI, fremantle$SeaLevel)
+#' lines(fremantle$SOI, fitted(mod))
+#' plot(fremantle$cYear, fremantle$SeaLevel)
+#' lines(fremantle$cYear, fitted(mod))
 #' @export
 fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
                    mu.link = "identity", sigma.link = "log",
