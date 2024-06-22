@@ -1,6 +1,6 @@
-#' Fit a Generalized extreme value (GEV) GAMLSS
+#' Fit a Generalized Extreme value (GEV) GAMLSS model
 #'
-#' Describe  [`GEV`]
+#' Describe
 #'
 #' @inheritParams gamlss::gamlss
 #'

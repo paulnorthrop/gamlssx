@@ -2,7 +2,7 @@
 % Please edit documentation in R/fitGEV.R
 \name{fitGEV}
 \alias{fitGEV}
-\title{Fit a Generalized extreme value (GEV) GAMLSS}
+\title{Fit a Generalized Extreme value (GEV) GAMLSS model}
 \usage{
 fitGEV(
   formula,
@@ -70,7 +70,7 @@ Returns a gamlss object. See the \strong{Value} section of
 \code{c("gamlssx", "gamlss", "gam", "glm", "lm")}.
 }
 \description{
-Describe  \code{\link{GEV}}
+Describe
 }
 \details{
 Add details. Explain \code{stepAttempts} in more detail.
