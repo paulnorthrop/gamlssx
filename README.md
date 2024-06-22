@@ -19,10 +19,20 @@ Status](https://codecov.io/github/paulnorthrop/gamlssx/coverage.svg?branch=maste
 The main aim of the `gamlssx` package is to enable a generalized extreme
 value (GEV) to be used as the response distribution in a generalized
 additive model for location scale and shape (GAMLSS), as implemented in
-the [`gamlss` R package](https://cran.r-project.org/package=gamlss). See
-[Rigby and Stasinopoulos
+the [`gamlss` R package](https://cran.r-project.org/package=gamlss). The
+[`gamlss.dist` R
+package](https://cran.r-project.org/package=gamlss.dist) packge does
+offer reversed GEV distribution via in `RGE` family, but (a) this is not
+the usual parameterization of a GEV distribution (for block maxima), and
+(b) in `RGE`, the shape parameter is restricted to have a particular
+sign, which is undesirable. The `gamlssx` package uses the usual
+parameterization and only restricts the shape parameter $\xi$ to be
+greater than $-1/2$, which is necessary for the usual likelihood theory
+to be applicable.
+
+See [Rigby and Stasinopoulos
 (2005)](https://doi.org/10.1111%2Fj.1467-9876.2005.00510.x) and the
-[gamlss home page](https://www.gamlss.com/) for details of the
+[gamlss home page](https://www.gamlss.com/) for details of the GAMLSS
 methodology. See also Gavin Simpson’s blog post [Modelling extremes
 using generalized additive
 models](https://fromthebottomoftheheap.net/2017/01/25/modelling-extremes-with-gams/)
@@ -177,7 +187,7 @@ term.plot(mod, rug = TRUE, pages = 1)
 <img src="man/figures/README-unnamed-chunk-2-4.png" width="100%" />
 
 ``` r
-term.plot(mod, what = "sigma", pages = 1)
+term.plot(mod, what = "sigma", rug = TRUE, pages = 1)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-5.png" width="100%" />
