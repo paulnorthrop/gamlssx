@@ -10,7 +10,7 @@ x <- stats::runif(n)
 mu <- 1 + 2 * x
 sigma <- 1
 xi <- 0.25
-y <- nieve::rGEV(n = 1, loc = mu, scale = sigma, shape = xi)
+y <- gamlssx::rGEV(n = 1, mu = mu, sigma = sigma, nu = xi)
 data <- data.frame(y = as.numeric(y), x = x)
 
 # Fit model using the default RS method
