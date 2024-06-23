@@ -6,7 +6,7 @@ Date: 2024-06-22
 Authors@R: c(
     person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
       role = c("aut", "cre", "cph")),
-    person("Jennifer", "Ji", role = c("aut", "cph"))
+    person("Jennifer", "Ji", role = c("aut"))
     )
 Description: Functions for fitting generalized additive models for the 
     location, scale and shape parameters of a generalized extreme value 

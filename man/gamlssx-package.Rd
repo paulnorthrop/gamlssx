@@ -31,7 +31,7 @@ models for location, scale and shape (with discussion), \emph{Appl. Statist.},
 
 Authors:
 \itemize{
-  \item Jennifer Ji [copyright holder]
+  \item Jennifer Ji
 }
 
 }
