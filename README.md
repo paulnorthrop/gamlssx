@@ -38,8 +38,9 @@ using generalized additive
 models](https://fromthebottomoftheheap.net/2017/01/25/modelling-extremes-with-gams/)
 for an overview of the use of GAMs for modelling extreme values, which
 uses the [mgcv R package](https://cran.r-project.org/package=mgcv) to
-fit similar models and notes that the [VGAM R
-package](https://cran.r-project.org/package=VGAM) can also be used.
+fit similar models. The [VGAM](https://cran.r-project.org/package=VGAM)
+and [evgam](https://cran.r-project.org/package=evgam) R packages can
+also be used
 
 ## An example
 
@@ -61,7 +62,7 @@ methods to calculate the weights used in the algorithm. Here, we use the
 default, Fisher’s scoring, based on the expected Fisher information. The
 code below does not do justice to the functionality of the `gamlss`
 package. See the [GAMLSS books](https://www.gamlss.com/books-vignettes/)
-for more information. We use the `gamlss()`The function `fitGEV()` can
+for more information.
 
 ``` r
 # Load gamlss, for the function pb()
