@@ -3,7 +3,7 @@
 #' The functions `GEVfisher()` and `GEVquasi()` each define the generalized
 #' extreme value (GEV) family distribution, a three parameter distribution, for
 #' a [`gamlss.family`][`gamlss.dist::gamlss.family`] object to be used in GAMLSS
-#' fitting using the function [`gamlss`][`gamlss::gamlss`]. The only difference
+#' fitting using the function [`gamlss()`][`gamlss::gamlss`]. The only difference
 #' between `GEVfisher()` and `GEVquasi()` is the form of scoring method used to
 #' define the weights used in the fitting algorithm. Fisher's scoring,
 #' based on the expected Fisher information is used in `GEVfisher()`, whereas
@@ -11,7 +11,7 @@
 #' of the log-likelihood, is used in `GEVquasi()`. The functions
 #' `dGEV`, `pGEV`, `qGEV` and `rGEV` define the density, distribution function,
 #' quantile function and random generation for the specific parameterization of
-#' the generalized extreme value distribution given in details below.
+#' the generalized extreme value distribution given in **Details** below.
 #'
 #' @param mu.link Defines the `mu.link`, with `"identity"` link as the default
 #' for the `mu` parameter.
@@ -29,13 +29,20 @@
 #' @param n Number of observations. If `length(n) > 1`, the length is taken to
 #'   be the number required.
 #'
-#' @details
-#'
-#' * Refer to Chapter 3 of Coles (2001) and Jenkinson (1955).
-#' * GEV(\eqn{\mu, \sigma, \xi}). \eqn{\nu = \xi}.
-#' * Give the pdf and/or cdf.
-#' * Explain the initial estimates.
-#' * Add code for the mean and variance.
+#' @details The distribution function of a GEV distribution with parameters
+#'  \code{loc} = \eqn{\mu}, \code{scale} = \eqn{\sigma (> 0)} and
+#'  \code{shape} = \eqn{\xi} (\eqn{= \nu}) is
+#'  \deqn{F(x) = \exp\{-[1 + \xi (x - \mu) / \sigma] ^ {-1/\xi} \}}{%
+#'        F(x) = exp{ -[1 + \xi (x - \mu) / \sigma] ^ (-1/\xi)} }
+#'  for \eqn{1 + \xi (x - \mu) / \sigma > 0}.  If \eqn{\xi = 0} the
+#'  distribution function is defined as the limit as \eqn{\xi} tends to zero.
+#'  The support of the distribution depends on \eqn{\xi}: it is
+#'  \eqn{x \leq \mu - \sigma / \xi}{x <= \mu - \sigma / \xi} for \eqn{\xi < 0};
+#'  \eqn{x \geq \mu - \sigma / \xi}{x >= \mu - \sigma / \xi} for \eqn{\xi > 0};
+#'  and \eqn{x} is unbounded for \eqn{\xi = 0}.
+#'  See
+#'  \url{https://en.wikipedia.org/wiki/Generalized_extreme_value_distribution}
+#'  and/or Chapter 3 of Coles (2001) for further information.
 #'
 #' @return `GEVfisher()` and `GEVquasi()` each return a
 #'   [`gamlss.family`][`gamlss.dist::gamlss.family`] object which can be used
@@ -45,6 +52,9 @@
 #'   function, and `rGEV()` generates random deviates.
 #' @seealso [`gamlss.family`][`gamlss.dist::gamlss.family`],
 #'   [`gamlss`][`gamlss::gamlss`]
+#' @references Coles, S. G. (2001) *An Introduction to Statistical
+#'   Modeling of Extreme Values*, Springer-Verlag, London.
+#'   Chapter 3: \doi{10.1007/978-1-4471-3675-0_3}
 #' @examples
 #' # Simulate some data
 #' set.seed(17012023)
@@ -156,7 +166,7 @@ GEVfisher <- function(mu.link = "identity", sigma.link = "log",
                                        y = y, mu = mu, sigma = sigma, nu = nu)),
 # sqrt(6) / pi is approximately 0.78
 # 0.57722 * sqrt(6) / pi is approximately 0.45
-# The gamlss.dist::RGE() code had a typo in mu.intital + 0.45 should be - 0.45
+# The gamlss.dist::RGE() code had a typo in mu.initial + 0.45 should be - 0.45
 # The next (commented out) line starts from a crude stationary fit
 #         mu.initial = expression(mu <- rep(mean(y) - 0.45 * sd(y), length(y))),
          mu.initial = expression(mu <- y - 0.45 * sd(y)),
