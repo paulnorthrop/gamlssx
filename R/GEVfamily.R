@@ -44,6 +44,10 @@
 #'  \url{https://en.wikipedia.org/wiki/Generalized_extreme_value_distribution}
 #'  and/or Chapter 3 of Coles (2001) for further information.
 #'
+#' For each observation in the data, the restriction that \eqn{\xi > -1/2} is
+#' imposed, which is necessary for the usual asymptotic likelihood theory to be
+#' applicable.
+#'
 #' @return `GEVfisher()` and `GEVquasi()` each return a
 #'   [`gamlss.family`][`gamlss.dist::gamlss.family`] object which can be used
 #'   to fit a regression model with a GEV response distribution using the
