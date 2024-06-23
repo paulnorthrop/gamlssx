@@ -47,7 +47,11 @@
 #'   [`gamlss.dist::gamlss.family()`][`gamlss.dist::gamlss.family`],
 #'   [`gamlss::gamlss()`][`gamlss::gamlss`]
 #' @examples
-#' # Simulate some data
+#' # Load gamlss, for the function pb()
+#' library(gamlss)
+#'
+#' ##### Simulated data
+#'
 #' set.seed(17012023)
 #' n <- 100
 #' x <- stats::runif(n)
@@ -55,52 +59,54 @@
 #' sigma <- 1
 #' xi <- 0.25
 #' y <- nieve::rGEV(n = 1, loc = mu, scale = sigma, shape = xi)
-#' plot(x, y)
 #' data <- data.frame(y = as.numeric(y), x = x)
-#' library(gamlss)
+#' plot(x, y)
 #'
-#' # Fit model using the default RS method
-#' mod <- fitGEV(y ~ pb(x), data = data)
-#'
-#' plot(mod)
-#' plot(data$x, data$y)
+#' # Fit model using the default RS method with Fisher's scoring
+#' mod <- fitGEV(y ~ gamlss::pb(x), data = data)
+#' # Summary of model fit
+#' summary(mod)
+#' # Residual diagnostic plots
+#' plot(mod, xlab = "x", ylab = "y")
+#' # Data plus fitted curve
+#' plot(data$x, data$y, xlab = "x", ylab = "y")
 #' lines(data$x, fitted(mod))
-#' fitGEV(y ~ pb(x), data = data)
 #'
-#' # Fit model using the mixed method
-#' mod <- fitGEV(y ~ pb(x), data = data, method = mixed())
+#' # Fit model using the mixed method and quasi-Newton scoring
+#' mod <- fitGEV(y ~ pb(x), data = data, method = mixed(), scoring = "quasi")
 #'
 #' # Fit model using the CG method
+#' # The default step length of 1 needs to be reduce to enable convergence
 #' mod <- fitGEV(y ~ pb(x), data = data, method = CG())
 #'
-#' # Transform Year
+#' ##### Fremantle annual maximum sea levels
+#' ##### See also the gamlssx package README file
+#'
+#' # Transform Year so that it is centred on 0
 #' fremantle <- transform(fremantle, cYear = Year - median(Year))
 #'
-#' mod <- fitGEV(SeaLevel ~ pb(SOI), data = fremantle)
-#' plot(fremantle$SOI, fremantle$SeaLevel)
-#' lines(fremantle$SOI, fitted(mod))
+#' # Plot sea level against year and against SOI
+#' plot(fremantle$Year, fremantle$SeaLevel, xlab = "year", ylab = "sea level (m)")
+#' plot(fremantle$SOI, fremantle$SeaLevel, xlab = "SOI", ylab = "sea level (m)")
 #'
-#' mod <- fitGEV(SeaLevel ~ pb(cYear), data = fremantle)
-#' plot(fremantle$cYear, fremantle$SeaLevel)
-#' lines(fremantle$cYear, fitted(mod))
+#' # Fit a model with P-spline effects of cYear and SOI on location and scale
+#' # The default links are identity for location and log for scale
+#' mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI),
+#'              sigma.formula = ~ pb(cYear) + pb(SOI),
+#'              data = fremantle)
 #'
-#' mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), data = fremantle)
-#' plot(fremantle$cYear, fremantle$SeaLevel)
-#' lines(fremantle$cYear, fitted(mod))
-#'
-#' mod <- fitGEV(SeaLevel ~ SOI, data = fremantle)
-#' plot(fremantle$SOI, fremantle$SeaLevel)
-#' lines(fremantle$SOI, fitted(mod))
-#'
-#' mod <- fitGEV(SeaLevel ~ cYear, data = fremantle)
-#' plot(fremantle$cYear, fremantle$SeaLevel)
-#' lines(fremantle$cYear, fitted(mod))
-#'
-#' mod <- fitGEV(SeaLevel ~ SOI + cYear, data = fremantle)
-#' plot(fremantle$SOI, fremantle$SeaLevel)
-#' lines(fremantle$SOI, fitted(mod))
-#' plot(fremantle$cYear, fremantle$SeaLevel)
-#' lines(fremantle$cYear, fitted(mod))
+#' # Summary of model fit
+#' summary(mod)
+#' # Model diagnostic plots
+#' plot(mod)
+#' # Worm plot
+#' wp(mod)
+#' # Plot of the fitted component smooth functions
+#' # Note: gamlssx::term.plot() does not include uncertainty about the intercept
+#' # Location mu
+#' term.plot(mod, rug = TRUE, pages = 1)
+#' # Scale sigma
+#' term.plot(mod, what = "sigma", rug = TRUE, pages = 1)
 #' @export
 fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
                    mu.link = "identity", sigma.link = "log",
