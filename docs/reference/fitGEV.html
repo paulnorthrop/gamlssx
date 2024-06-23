@@ -90,25 +90,26 @@ scoring algorithm.</p></dd>
 <dt>mu.link, sigma.link, xi.link</dt>
 <dd><p>Character scalars to set the respective
 link functions for the location (<code>mu</code>), scale (<code>sigma</code>) and shape (<code>xi</code>)
-parameters. The latter is passed to <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss</a></code> as
-<code>nu.link</code>.</p></dd>
+parameters. The latter is passed to <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code>
+as <code>nu.link</code>.</p></dd>
 
 
 <dt>stepLength</dt>
-<dd><p>A numeric vector containing positive values. The initial
+<dd><p>A numeric vector of positive values. The initial
 values of the step lengths <code>mu.step</code>, <code>sigma.step</code> and <code>nu.step</code> passed to
-<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.control.html" class="external-link">gamlss.control</a></code> in the first attempt to fit
-the model by calling <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss</a></code>. If <code>stepLength</code> has a
-length that is less than 3 then <code>stepLength</code> is recycled to have length 3.</p></dd>
+<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.control.html" class="external-link">gamlss::gamlss.control()</a></code> in the first attempt
+to fit the model by calling <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code>. If
+<code>stepLength</code> has a length that is less than 3 then <code>stepLength</code> is
+recycled to have length 3.</p></dd>
 
 
 <dt>stepAttempts</dt>
 <dd><p>A non-negative integer. If the first call to
-<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss</a></code> throws an error then we make <code>stepAttempts</code>
-further attempts to fit the model, each time dividing by 2 the values
-of <code>mu.step</code>, <code>sigma.step</code> and <code>nu.step</code> supplied to
-<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.control.html" class="external-link">gamlss.control</a></code>. If <code>stepAttempts &lt; 1</code> then
-no further attempts are made.</p></dd>
+<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code> throws an error then we make
+<code>stepAttempts</code> further attempts to fit the model, each time dividing by 2
+the values of <code>mu.step</code>, <code>sigma.step</code> and <code>nu.step</code> supplied to
+<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.control.html" class="external-link">gamlss::gamlss.control()</a></code>. If
+<code>stepAttempts &lt; 1</code> then no further attempts are made.</p></dd>
 
 
 <dt>stepReduce</dt>
@@ -119,12 +120,13 @@ halved for each extra attempt.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Further arguments passed to <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss</a></code>, in
-particular <code>method</code>, which sets the fitting algorithm, with options
-<code>RS()</code>, <code>CG()</code> or <code>mixed()</code>. The default, <code>method = RS()</code> seems to work
-well, as does <code>method = mixed()</code>. In contrast, <code>method = CG()</code> often
-requires the step length to be reduced before convergence is achieved.
-<code>fitGEV()</code> attempts to do this automatically. See <code>stepAttemmpts</code>.</p></dd>
+<dd><p>Further arguments passed to
+<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code>, in particular <code>method</code>, which sets
+the fitting algorithm, with options <code>RS()</code>, <code>CG()</code> or <code>mixed()</code>. The
+default, <code>method = RS()</code> seems to work well, as does <code>method = mixed()</code>.
+In contrast, <code>method = CG()</code> often requires the step length to be reduced
+before convergence is achieved. <code>fitGEV()</code> attempts to do this
+automatically. See <code>stepAttemmpts</code>.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -132,7 +134,7 @@ requires the step length to be reduced before convergence is achieved.
     
 
 <p>Returns a gamlss object. See the <strong>Value</strong> section of
-<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss</a></code>. The class of the returned object is
+<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code>. The class of the returned object is
 <code>c("gamlssx", "gamlss", "gam", "glm", "lm")</code>.</p>
     </div>
     <div id="details">
@@ -141,8 +143,9 @@ requires the step length to be reduced before convergence is achieved.
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="GEV.html">GEV</a></code>, <code><a href="https://rdrr.io/pkg/gamlss.dist/man/gamlss.family.html" class="external-link">gamlss.family</a></code>,
-<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss</a></code></p></div>
+    <div class="dont-index"><p><code><a href="GEV.html">GEV</a></code>,
+<code><a href="https://rdrr.io/pkg/gamlss.dist/man/gamlss.family.html" class="external-link">gamlss.dist::gamlss.family()</a></code>,
+<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code></p></div>
     </div>
 
     <div id="ref-examples">

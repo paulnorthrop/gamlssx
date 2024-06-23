@@ -12,37 +12,40 @@
 #'   scoring algorithm.
 #' @param mu.link,sigma.link,xi.link Character scalars to set the respective
 #'   link functions for the location (`mu`), scale (`sigma`) and shape (`xi`)
-#'   parameters. The latter is passed to [`gamlss`][`gamlss::gamlss`] as
-#'   `nu.link`.
-#' @param stepLength A numeric vector containing positive values. The initial
+#'   parameters. The latter is passed to [`gamlss::gamlss()`][`gamlss::gamlss`]
+#'   as `nu.link`.
+#' @param stepLength A numeric vector of positive values. The initial
 #'    values of the step lengths `mu.step`, `sigma.step` and `nu.step` passed to
-#'   [`gamlss.control`][`gamlss::gamlss.control`] in the first attempt to fit
-#'   the model by calling [`gamlss`][`gamlss::gamlss`]. If `stepLength` has a
-#'   length that is less than 3 then `stepLength` is recycled to have length 3.
+#'   [`gamlss::gamlss.control()`][`gamlss::gamlss.control`] in the first attempt
+#'   to fit the model by calling [`gamlss::gamlss()`][`gamlss::gamlss`]. If
+#'   `stepLength` has a length that is less than 3 then `stepLength` is
+#'   recycled to have length 3.
 #' @param stepAttempts A non-negative integer. If the first call to
-#'   [`gamlss`][`gamlss::gamlss`] throws an error then we make `stepAttempts`
-#'   further attempts to fit the model, each time dividing by 2 the values
-#'   of `mu.step`, `sigma.step` and `nu.step` supplied to
-#'   [`gamlss.control`][`gamlss::gamlss.control`]. If `stepAttempts < 1` then
-#'   no further attempts are made.
+#'   [`gamlss::gamlss()`][`gamlss::gamlss`] throws an error then we make
+#'   `stepAttempts` further attempts to fit the model, each time dividing by 2
+#'   the values of `mu.step`, `sigma.step` and `nu.step` supplied to
+#'   [`gamlss::gamlss.control()`][`gamlss::gamlss.control`]. If
+#'   `stepAttempts < 1` then no further attempts are made.
 #' @param stepReduce A number greater than 1. The factor by which the step
 #'   lengths in `stepLength` are reduced for each extra attempt to fit the
 #'   model. The default, `stepReduce = 2` means that the step lengths are
 #'   halved for each extra attempt.
-#' @param ... Further arguments passed to [`gamlss`][`gamlss::gamlss`], in
-#'   particular `method`, which sets the fitting algorithm, with options
-#'   `RS()`, `CG()` or `mixed()`. The default, `method = RS()` seems to work
-#'   well, as does `method = mixed()`. In contrast, `method = CG()` often
-#'   requires the step length to be reduced before convergence is achieved.
-#'   `fitGEV()` attempts to do this automatically. See `stepAttemmpts`.
+#' @param ... Further arguments passed to
+#'   [`gamlss::gamlss()`][`gamlss::gamlss`], in particular `method`, which sets
+#'   the fitting algorithm, with options `RS()`, `CG()` or `mixed()`. The
+#'   default, `method = RS()` seems to work well, as does `method = mixed()`.
+#'   In contrast, `method = CG()` often requires the step length to be reduced
+#'   before convergence is achieved. `fitGEV()` attempts to do this
+#'   automatically. See `stepAttemmpts`.
 #'
 #' @details Add details. Explain `stepAttempts` in more detail.
 #'
 #' @return Returns a gamlss object. See the **Value** section of
-#'   [`gamlss`][`gamlss::gamlss`]. The class of the returned object is
+#'   [`gamlss::gamlss()`][`gamlss::gamlss`]. The class of the returned object is
 #'   `c("gamlssx", "gamlss", "gam", "glm", "lm")`.
-#' @seealso [`GEV`], [`gamlss.family`][`gamlss.dist::gamlss.family`],
-#'   [`gamlss`][`gamlss::gamlss`]
+#' @seealso [`GEV`],
+#'   [`gamlss.dist::gamlss.family()`][`gamlss.dist::gamlss.family`],
+#'   [`gamlss::gamlss()`][`gamlss::gamlss`]
 #' @examples
 #' # Simulate some data
 #' set.seed(17012023)

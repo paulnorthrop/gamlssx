@@ -49,17 +49,19 @@ be the number required.}
 }
 \value{
 \code{GEVfisher()} and \code{GEVquasi()} each return a
-\code{\link[gamlss.dist:gamlss.family]{gamlss.family}} object which can be used
-to fit a regression model with a GEV response distribution using the
-\code{\link[gamlss:gamlss]{gamlss}} function. \code{dGEV()} gives the density,
+\code{\link[gamlss.dist:gamlss.family]{gamlss.dist::gamlss.family()}} object
+which can be used to fit a regression model with a GEV response
+distribution using the
+\code{\link[gamlss:gamlss]{gamlss::gamlss()}} function. \code{dGEV()} gives the density,
 \code{pGEV()} gives the distribution function, \code{qGEV()} gives the quantile
 function, and \code{rGEV()} generates random deviates.
 }
 \description{
 The functions \code{GEVfisher()} and \code{GEVquasi()} each define the generalized
 extreme value (GEV) family distribution, a three parameter distribution, for
-a \code{\link[gamlss.dist:gamlss.family]{gamlss.family}} object to be used in GAMLSS
-fitting using the function \code{\link[gamlss:gamlss]{gamlss()}}. The only difference
+a \code{\link[gamlss.dist:gamlss.family]{gamlss.dist::gamlss.family()}} object to
+be used in GAMLSS fitting using the function
+\code{\link[gamlss:gamlss]{gamlss::gamlss()}}. The only difference
 between \code{GEVfisher()} and \code{GEVquasi()} is the form of scoring method used to
 define the weights used in the fitting algorithm. Fisher's scoring,
 based on the expected Fisher information is used in \code{GEVfisher()}, whereas
@@ -89,40 +91,18 @@ For each observation in the data, the restriction that \eqn{\xi > -1/2} is
 imposed, which is necessary for the usual asymptotic likelihood theory to be
 applicable.
 }
-\examples{
-# Simulate some data
-set.seed(17012023)
-n <- 100
-x <- stats::runif(n)
-mu <- 1 + 2 * x
-sigma <- 1
-xi <- 0.25
-y <- nieve::rGEV(n = 1, loc = mu, scale = sigma, shape = xi)
-plot(x, y)
-# Fit model
-data <- data.frame(y = as.numeric(y), x = x)
-library(gamlss)
-mod <- fitGEV(y ~ pb(x), data = data)
-plot(mod)
-plot(data$x, data$y)
+\section{Examples}{
 
-# Converges
-modRS <- fitGEV(y ~ pb(x), data = data, method = RS())
-# Throws an error: parameters out-of-bounds leads to Inf deviance
-\dontrun{
-modCG <- fitGEV(y ~ pb(x), data = data, method = CG())
+See the examples in \code{\link[=fitGEV]{fitGEV()}}.
 }
-# Can we avoid the problem by halving the step lengths?
-modCG <- fitGEV(y ~ pb(x), data = data, method = CG(),
- control = gamlss.control(mu.step = 0.5, sigma.step = 0.5, nu.step = 0.5))
-modMixed <- fitGEV(y ~ pb(x), data = data, method = mixed())
-}
+
 \references{
 Coles, S. G. (2001) \emph{An Introduction to Statistical
 Modeling of Extreme Values}, Springer-Verlag, London.
 Chapter 3: \doi{10.1007/978-1-4471-3675-0_3}
 }
 \seealso{
-\code{\link[gamlss.dist:gamlss.family]{gamlss.family}},
-\code{\link[gamlss:gamlss]{gamlss}}
+\code{\link{fitGEV}},
+\code{\link[gamlss.dist:gamlss.family]{gamlss.dist::gamlss.family()}},
+\code{\link[gamlss:gamlss]{gamlss::gamlss()}}
 }

@@ -7,14 +7,14 @@
 \title{gamlssx: Generalized Additive Extreme Value Models for Location, Scale and
 Shape}
 \description{
-Functions for fitting generalized additive models for the location, scale
-and shape parameters of a generalized extreme value distribution. The
-methodology is based on Rigby and Stasinopoulos (2005) and implemented using
-functions from the \code{gamlss} package \doi{10.32614/CRAN.package.gamlss}.
+Fits generalized additive models for the location, scale and shape
+parameters of a generalized extreme value distribution. The methodology is
+based on Rigby and Stasinopoulos (2005) and implemented using functions from
+the \code{gamlss} package \doi{10.32614/CRAN.package.gamlss}.
 }
 \details{
-The main function in \code{gamlssx} is \code{\link{fitGEV}}, which calls the
-function \code{\link[gamlss:gamlss]{gamlss}}.
+The main function in \code{gamlssx} is \code{\link[=fitGEV]{fitGEV()}}, which calls the
+function \code{\link[gamlss:gamlss]{gamlss::gamlss()}}.
 See the \href{https://paulnorthrop.github.io/gamlssx/}{gamlssx package
 page on Github} for more information.
 }
@@ -24,7 +24,7 @@ models for location, scale and shape (with discussion), \emph{Appl. Statist.},
 \strong{54}, part 3, pages 507-554. \doi{10.1111/j.1467-9876.2005.00510.x}
 }
 \seealso{
-\code{\link{fitGEV}}, \code{\link[gamlss:gamlss]{gamlss}}
+\code{\link[=fitGEV]{fitGEV()}}, \code{\link[gamlss:gamlss]{gamlss::gamlss()}}
 }
 \author{
 \strong{Maintainer}: Paul J. Northrop \email{p.northrop@ucl.ac.uk} [copyright holder]

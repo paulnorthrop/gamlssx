@@ -36,37 +36,39 @@ scoring algorithm.}
 
 \item{mu.link, sigma.link, xi.link}{Character scalars to set the respective
 link functions for the location (\code{mu}), scale (\code{sigma}) and shape (\code{xi})
-parameters. The latter is passed to \code{\link[gamlss:gamlss]{gamlss}} as
-\code{nu.link}.}
+parameters. The latter is passed to \code{\link[gamlss:gamlss]{gamlss::gamlss()}}
+as \code{nu.link}.}
 
-\item{stepLength}{A numeric vector containing positive values. The initial
+\item{stepLength}{A numeric vector of positive values. The initial
 values of the step lengths \code{mu.step}, \code{sigma.step} and \code{nu.step} passed to
-\code{\link[gamlss:gamlss.control]{gamlss.control}} in the first attempt to fit
-the model by calling \code{\link[gamlss:gamlss]{gamlss}}. If \code{stepLength} has a
-length that is less than 3 then \code{stepLength} is recycled to have length 3.}
+\code{\link[gamlss:gamlss.control]{gamlss::gamlss.control()}} in the first attempt
+to fit the model by calling \code{\link[gamlss:gamlss]{gamlss::gamlss()}}. If
+\code{stepLength} has a length that is less than 3 then \code{stepLength} is
+recycled to have length 3.}
 
 \item{stepAttempts}{A non-negative integer. If the first call to
-\code{\link[gamlss:gamlss]{gamlss}} throws an error then we make \code{stepAttempts}
-further attempts to fit the model, each time dividing by 2 the values
-of \code{mu.step}, \code{sigma.step} and \code{nu.step} supplied to
-\code{\link[gamlss:gamlss.control]{gamlss.control}}. If \code{stepAttempts < 1} then
-no further attempts are made.}
+\code{\link[gamlss:gamlss]{gamlss::gamlss()}} throws an error then we make
+\code{stepAttempts} further attempts to fit the model, each time dividing by 2
+the values of \code{mu.step}, \code{sigma.step} and \code{nu.step} supplied to
+\code{\link[gamlss:gamlss.control]{gamlss::gamlss.control()}}. If
+\code{stepAttempts < 1} then no further attempts are made.}
 
 \item{stepReduce}{A number greater than 1. The factor by which the step
 lengths in \code{stepLength} are reduced for each extra attempt to fit the
 model. The default, \code{stepReduce = 2} means that the step lengths are
 halved for each extra attempt.}
 
-\item{...}{Further arguments passed to \code{\link[gamlss:gamlss]{gamlss}}, in
-particular \code{method}, which sets the fitting algorithm, with options
-\code{RS()}, \code{CG()} or \code{mixed()}. The default, \code{method = RS()} seems to work
-well, as does \code{method = mixed()}. In contrast, \code{method = CG()} often
-requires the step length to be reduced before convergence is achieved.
-\code{fitGEV()} attempts to do this automatically. See \code{stepAttemmpts}.}
+\item{...}{Further arguments passed to
+\code{\link[gamlss:gamlss]{gamlss::gamlss()}}, in particular \code{method}, which sets
+the fitting algorithm, with options \code{RS()}, \code{CG()} or \code{mixed()}. The
+default, \code{method = RS()} seems to work well, as does \code{method = mixed()}.
+In contrast, \code{method = CG()} often requires the step length to be reduced
+before convergence is achieved. \code{fitGEV()} attempts to do this
+automatically. See \code{stepAttemmpts}.}
 }
 \value{
 Returns a gamlss object. See the \strong{Value} section of
-\code{\link[gamlss:gamlss]{gamlss}}. The class of the returned object is
+\code{\link[gamlss:gamlss]{gamlss::gamlss()}}. The class of the returned object is
 \code{c("gamlssx", "gamlss", "gam", "glm", "lm")}.
 }
 \description{
@@ -132,6 +134,7 @@ plot(fremantle$cYear, fremantle$SeaLevel)
 lines(fremantle$cYear, fitted(mod))
 }
 \seealso{
-\code{\link{GEV}}, \code{\link[gamlss.dist:gamlss.family]{gamlss.family}},
-\code{\link[gamlss:gamlss]{gamlss}}
+\code{\link{GEV}},
+\code{\link[gamlss.dist:gamlss.family]{gamlss.dist::gamlss.family()}},
+\code{\link[gamlss:gamlss]{gamlss::gamlss()}}
 }
