@@ -17,4 +17,6 @@
 #'
 #' @source Coles, S. G. (2001) An Introduction to Statistical Modelling of
 #' Extreme Values. London: Springer.
+#' @examples
+#' summary(fremantle)
 "fremantle"

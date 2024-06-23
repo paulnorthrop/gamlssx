@@ -29,4 +29,7 @@ corresponding years. The third column gives annual mean values of the
 Southern Oscillation Index (SOI), which is a proxy for meteorological
 volatility.
 }
+\examples{
+summary(fremantle)
+}
 \keyword{datasets}
