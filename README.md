@@ -27,8 +27,9 @@ the usual parameterization of a GEV distribution (for block maxima), and
 (b) in `RGE`, the shape parameter is restricted to have a particular
 sign, which is undesirable. The `gamlssx` package uses the usual
 parameterization, with a shape parameter $\xi$, and imposes only the
-restrictions $\xi > -1/2$, which is necessary for the usual likelihood
-theory to be applicable.
+restriction that, for each observation in the data, $\xi > -1/2$, which
+is necessary for the usual asymptotic likelihood theory to be
+applicable.
 
 See [Rigby and Stasinopoulos
 (2005)](https://doi.org/10.1111%2Fj.1467-9876.2005.00510.x) and the
@@ -49,7 +50,7 @@ is a copy of data of the same name from the [`ismev` R
 package](https://CRAN.R-project.org/package=gamlss). These data contain
 86 annual maximum seas levels recorded at Fremantle, Australia during
 1987-1989. In addition to the year of each sea level, we have available
-the value of the Southern Oscillation Inde (SOI). We use `gamlssx`’s
+the value of the Southern Oscillation Index (SOI). We use `gamlssx`’s
 `fitGEV()` function to fit a model to these data that is similar to the
 first one fitted, to the same data, in Gavin Simpson’s blog post.
 
