@@ -19,9 +19,9 @@ Status](https://codecov.io/github/paulnorthrop/gamlssx/coverage.svg?branch=maste
 The main aim of the `gamlssx` package is to enable a generalized extreme
 value (GEV) to be used as the response distribution in a generalized
 additive model for location scale and shape (GAMLSS), as implemented in
-the [`gamlss` R package](https://cran.r-project.org/package=gamlss). The
+the [`gamlss` R package](https://CRAN.R-project.org/package=gamlss). The
 [`gamlss.dist` R
-package](https://cran.r-project.org/package=gamlss.dist) packge does
+package](https://CRAN.R-project.org/package=gamlss.dist) packge does
 offer reversed GEV distribution via in `RGE` family, but (a) this is not
 the usual parameterization of a GEV distribution (for block maxima), and
 (b) in `RGE`, the shape parameter is restricted to have a particular
@@ -38,21 +38,20 @@ using generalized additive
 models](https://fromthebottomoftheheap.net/2017/01/25/modelling-extremes-with-gams/)
 for an overview of the use of GAMs for modelling extreme values, which
 uses the [mgcv R package](https://cran.r-project.org/package=mgcv) to
-fit similar models. The [VGAM](https://cran.r-project.org/package=VGAM)
-and [evgam](https://cran.r-project.org/package=evgam) R packages can
+fit similar models. The [VGAM](https://CRAN.R-project.org/package=VGAM)
+and [evgam](https://CRAN.R-project.org/package=evgam) R packages can
 also be used
 
 ## An example
 
 We consider the `fremantle` data include in the `gamlssx` package, which
 is a copy of data of the same name from the [`ismev` R
-package]((https://cran.r-project.org/package=gamlss)). These data
-contain 86 annual maximum seas levels recorded at Fremantle, Australia
-during 1987-1989. In addition to the year of each sea level, we have
-available the value of the Southern Oscillation Inde (SOI). We use
-`gamlssx`’s `fitGEV()` function to fit a model to these data that is
-similar to the first one fitted, to the same data, in Gavin Simpson’s
-blog post.
+package](https://CRAN.R-project.org/package=gamlss). These data contain
+86 annual maximum seas levels recorded at Fremantle, Australia during
+1987-1989. In addition to the year of each sea level, we have available
+the value of the Southern Oscillation Inde (SOI). We use `gamlssx`’s
+`fitGEV()` function to fit a model to these data that is similar to the
+first one fitted, to the same data, in Gavin Simpson’s blog post.
 
 The `fitGEV()` function calls the function `gamlss::gamlss()`, which
 offers 3 fitting algorithms: `RS` (Rigby and Stasinopoulos), `CG` (Cole
