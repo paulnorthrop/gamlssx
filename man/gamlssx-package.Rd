@@ -8,9 +8,9 @@
 Shape}
 \description{
 Fits generalized additive models for the location, scale and shape
-parameters of a generalized extreme value distribution. The methodology is
-based on Rigby and Stasinopoulos (2005) and implemented using functions from
-the \code{gamlss} package \doi{10.32614/CRAN.package.gamlss}.
+parameters of a generalized extreme value response distribution. The
+methodology is based on Rigby and Stasinopoulos (2005) and implemented using
+functions from the \code{gamlss} package \doi{10.32614/CRAN.package.gamlss}.
 }
 \details{
 The main function in \code{gamlssx} is \code{\link[=fitGEV]{fitGEV()}}, which calls the

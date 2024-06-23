@@ -150,17 +150,7 @@ automatically. See <code>stepAttemmpts</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Simulate some data</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">17012023</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">x</span></span></span>
-<span class="r-in"><span><span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
-<span class="r-in"><span><span class="va">xi</span> <span class="op">&lt;-</span> <span class="fl">0.25</span></span></span>
-<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">nieve</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nieve/man/GEV.html" class="external-link">rGEV</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1</span>, loc <span class="op">=</span> <span class="va">mu</span>, scale <span class="op">=</span> <span class="va">sigma</span>, shape <span class="op">=</span> <span class="va">xi</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="fitGEV-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load gamlss, for the function pb()</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.gamlss.com/" class="external-link">gamlss</a></span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: splines</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: gamlss.data</span>
@@ -177,71 +167,100 @@ automatically. See <code>stepAttemmpts</code>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> For more on GAMLSS look at https://www.gamlss.com/</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Type gamlssNews() to see new features/changes/bug fixes.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Fit model using the default RS method</span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 1: Global Deviance = 323.1514 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 2: Global Deviance = 320.4992 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 3: Global Deviance = 320.1412 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 4: Global Deviance = 320.091 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 5: Global Deviance = 320.0839 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 6: Global Deviance = 320.0829 </span>
+<span class="r-in"><span><span class="co">##### Simulated data</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="fitGEV-2.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	      Summary of the Quantile Residuals</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                            mean   =  -0.0005858247 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        variance   =  1.00992 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                coef. of skewness  =  -0.007497414 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                coef. of kurtosis  =  2.780556 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Filliben correlation coefficient  =  0.9973717 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="fitGEV-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">17012023</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">x</span></span></span>
+<span class="r-in"><span><span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="va">xi</span> <span class="op">&lt;-</span> <span class="fl">0.25</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">nieve</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nieve/man/GEV.html" class="external-link">rGEV</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1</span>, loc <span class="op">=</span> <span class="va">mu</span>, scale <span class="op">=</span> <span class="va">sigma</span>, shape <span class="op">=</span> <span class="va">xi</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="fitGEV-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fit model using the default RS method with Fisher's scoring</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu">gamlss</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 1: Global Deviance = 323.1514 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 2: Global Deviance = 320.4992 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 3: Global Deviance = 320.1412 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 4: Global Deviance = 320.091 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 5: Global Deviance = 320.0839 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 6: Global Deviance = 320.0829 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 1: Global Deviance = 323.1515 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 2: Global Deviance = 320.4994 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 3: Global Deviance = 320.1414 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 4: Global Deviance = 320.0911 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 5: Global Deviance = 320.084 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 6: Global Deviance = 320.0831 </span>
+<span class="r-in"><span><span class="co"># Summary of model fit</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Family:  c("GEV", "Generalized Extreme Value") </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Fitting method: RS() </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gamlss::gamlss(formula = y ~ pb(x), family = GEVfisher(mu.link = "identity",  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gamlss::gamlss(formula = y ~ gamlss::pb(x), family = GEVfisher(mu.link = "identity",  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     sigma.link = "log", nu.link = "identity"), data = data,  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mu.step = 1, sigma.step = 1, nu.step = 1) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mu Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)        pb(x)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       1.273        1.383  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sigma Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    -0.08761  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Nu Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      0.1926  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fitting method: RS() </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Degrees of Freedom for the fit: 4 Residual Deg. of Freedom   96 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Global Deviance:     320.083 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             AIC:     328.083 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             SBC:     338.505 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mu link function:  identity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mu Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     1.2726     0.1921   6.626 2.00e-09 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gamlss::pb(x)   1.3830     0.3193   4.332 3.63e-05 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sigma link function:  log</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sigma Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.08760    0.09058  -0.967    0.336</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Nu link function:  identity </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Nu Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.19264    0.08477   2.272   0.0253 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> No. of observations in the fit:  100 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Degrees of Freedom for the fit:  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Residual Deg. of Freedom:  96 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       at cycle:  6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Global Deviance:     320.0831 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             AIC:     328.0831 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             SBC:     338.5037 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
+<span class="r-in"><span><span class="co"># Residual diagnostic plots</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span>, xlab <span class="op">=</span> <span class="st">"x"</span>, ylab <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="fitGEV-2.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	      Summary of the Quantile Residuals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            mean   =  -0.0005916633 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        variance   =  1.009922 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                coef. of skewness  =  -0.007492234 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                coef. of kurtosis  =  2.78055 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Filliben correlation coefficient  =  0.9973717 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
+<span class="r-in"><span><span class="co"># Data plus fitted curve</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">y</span>, xlab <span class="op">=</span> <span class="st">"x"</span>, ylab <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="fitGEV-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Fit model using the mixed method</span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="fu">mixed</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Fit model using the mixed method and quasi-Newton scoring</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="fu">mixed</span><span class="op">(</span><span class="op">)</span>, scoring <span class="op">=</span> <span class="st">"quasi"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 1: Global Deviance = 323.1514 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 1: Global Deviance = 320.1911 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 2: Global Deviance = 320.0855 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 3: Global Deviance = 320.083 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 4: Global Deviance = 320.0828 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 1: Global Deviance = 323.1712 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 1: Global Deviance = 320.1204 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 2: Global Deviance = 320.086 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 3: Global Deviance = 320.0833 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 4: Global Deviance = 320.083 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit model using the CG method</span></span></span>
+<span class="r-in"><span><span class="co"># The default step length of 1 needs to be reduce to enable convergence</span></span></span>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="fu">CG</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.5 </span>
@@ -257,73 +276,99 @@ automatically. See <code>stepAttemmpts</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 10: Global Deviance = 320.0839 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 11: Global Deviance = 320.0834 </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Transform Year</span></span></span>
+<span class="r-in"><span><span class="co">##### Fremantle annual maximum sea levels</span></span></span>
+<span class="r-in"><span><span class="co">##### See also the gamlssx package README file</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Transform Year so that it is centred on 0</span></span></span>
 <span class="r-in"><span><span class="va">fremantle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">fremantle</span>, cYear <span class="op">=</span> <span class="va">Year</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">Year</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">SeaLevel</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">SOI</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">fremantle</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 1: Global Deviance = -84.1426 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 2: Global Deviance = -93.861 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 3: Global Deviance = -94.3269 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 4: Global Deviance = -94.4039 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 5: Global Deviance = -94.4188 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 6: Global Deviance = -94.4218 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 7: Global Deviance = -94.4224 </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">SOI</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">SOI</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Plot sea level against year and against SOI</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">Year</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span>, xlab <span class="op">=</span> <span class="st">"year"</span>, ylab <span class="op">=</span> <span class="st">"sea level (m)"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="fitGEV-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">SeaLevel</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">cYear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">fremantle</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.25 </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fitGEV(SeaLevel ~ pb(cYear), data = fremantle):</span> No convergence. An error was thrown from the last call to gamlss()</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">cYear</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">cYear</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">SOI</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span>, xlab <span class="op">=</span> <span class="st">"SOI"</span>, ylab <span class="op">=</span> <span class="st">"sea level (m)"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="fitGEV-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">SeaLevel</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">cYear</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">SOI</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">fremantle</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Fit a model with P-spline effects of cYear and SOI on location and scale</span></span></span>
+<span class="r-in"><span><span class="co"># The default links are identity for location and log for scale</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">SeaLevel</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">cYear</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">SOI</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             sigma.formula <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">cYear</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">SOI</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             data <span class="op">=</span> <span class="va">fremantle</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.25 </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), data = fremantle):</span> No convergence. An error was thrown from the last call to gamlss()</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">cYear</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">cYear</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), sigma.formula = ~pb(cYear) +     pb(SOI), data = fremantle):</span> No convergence. An error was thrown from the last call to gamlss()</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Summary of model fit</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family:  c("GEV", "Generalized Extreme Value") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gamlss::gamlss(formula = y ~ pb(x), family = GEVfisher(mu.link = "identity",  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     sigma.link = "log", nu.link = "identity"), data = data,  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     method = CG(), mu.step = 0.5, sigma.step = 0.5,      nu.step = 0.5) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fitting method: CG() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mu link function:  identity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mu Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   1.2746     0.1923   6.628 1.99e-09 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pb(x)         1.3801     0.3198   4.315 3.88e-05 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sigma link function:  log</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sigma Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.08693    0.09060  -0.959     0.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Nu link function:  identity </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Nu Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.19171    0.08467   2.264   0.0258 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NOTE: Additive smoothing terms exist in the formulas: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  i) Std. Error for smoothers are for the linear effect only. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ii) Std. Error for the linear terms maybe are not accurate. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> No. of observations in the fit:  100 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Degrees of Freedom for the fit:  4.000271</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Residual Deg. of Freedom:  95.99973 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       at cycle:  11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Global Deviance:     320.0834 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             AIC:     328.0839 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             SBC:     338.5053 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
+<span class="r-in"><span><span class="co"># Model diagnostic plots</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="fitGEV-6.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">SeaLevel</span> <span class="op">~</span> <span class="va">SOI</span>, data <span class="op">=</span> <span class="va">fremantle</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 1: Global Deviance = -84.1419 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 2: Global Deviance = -93.8607 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 3: Global Deviance = -94.3265 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 4: Global Deviance = -94.4036 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 5: Global Deviance = -94.4185 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 6: Global Deviance = -94.4215 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 7: Global Deviance = -94.4221 </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">SOI</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">SOI</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	      Summary of the Quantile Residuals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            mean   =  -0.0006504536 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        variance   =  1.009723 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                coef. of skewness  =  -0.004767227 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                coef. of kurtosis  =  2.781026 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Filliben correlation coefficient  =  0.99738 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ******************************************************************</span>
+<span class="r-in"><span><span class="co"># Worm plot</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/wp.html" class="external-link">wp</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in as.environment(DaTa):</span> invalid object for 'as.environment'</span>
+<span class="r-in"><span><span class="co"># Plot of the fitted component smooth functions</span></span></span>
+<span class="r-in"><span><span class="co"># Note: gamlssx::term.plot() does not include uncertainty about the intercept</span></span></span>
+<span class="r-in"><span><span class="co"># Location mu</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/term.plot.html" class="external-link">term.plot</a></span><span class="op">(</span><span class="va">mod</span>, rug <span class="op">=</span> <span class="cn">TRUE</span>, pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="fitGEV-7.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">SeaLevel</span> <span class="op">~</span> <span class="va">cYear</span>, data <span class="op">=</span> <span class="va">fremantle</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.25 </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fitGEV(SeaLevel ~ cYear, data = fremantle):</span> No convergence. An error was thrown from the last call to gamlss()</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">cYear</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">cYear</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="fitGEV-8.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">SeaLevel</span> <span class="op">~</span> <span class="va">SOI</span> <span class="op">+</span> <span class="va">cYear</span>, data <span class="op">=</span> <span class="va">fremantle</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.25 </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fitGEV(SeaLevel ~ SOI + cYear, data = fremantle):</span> No convergence. An error was thrown from the last call to gamlss()</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">SOI</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">SOI</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="fitGEV-9.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">cYear</span>, <span class="va">fremantle</span><span class="op">$</span><span class="va">SeaLevel</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">fremantle</span><span class="op">$</span><span class="va">cYear</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="fitGEV-10.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># Scale sigma</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/term.plot.html" class="external-link">term.plot</a></span><span class="op">(</span><span class="va">mod</span>, what <span class="op">=</span> <span class="st">"sigma"</span>, rug <span class="op">=</span> <span class="cn">TRUE</span>, pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in term.plot(mod, what = "sigma", rug = TRUE, pages = 1):</span> The model for sigma has only the constant fitted</span>
 </code></pre></div>
     </div>
   </div>

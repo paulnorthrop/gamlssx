@@ -183,12 +183,14 @@ plot(mod)
 ``` r
 # Plot of the fitted component smooth functions
 # Note: gamlssx::term.plot() does not include uncertainty about the intercept
+# Location mu
 term.plot(mod, rug = TRUE, pages = 1)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-4.png" width="100%" />
 
 ``` r
+# Scale sigma
 term.plot(mod, what = "sigma", rug = TRUE, pages = 1)
 ```
 
