@@ -17,7 +17,7 @@
 #'   The GEV expected information is defined only for \eqn{\xi > -0.5} and does
 #'   not depend on the value of \eqn{\mu}.
 #'
-#'   The other functions are vectorised and calculate the individual
+#'   The other functions are vectorized and calculate the individual
 #'   contributions to the expected information matrix. For example, `gev11e`
 #'   calculates the expectation \eqn{i_{\mu\mu}} of the negated second
 #'   derivative of the GEV log-density with respect to \eqn{\mu}, that is, each

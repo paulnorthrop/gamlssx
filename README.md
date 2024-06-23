@@ -14,14 +14,14 @@ Status](https://codecov.io/github/paulnorthrop/gamlssx/coverage.svg?branch=maste
 [![Downloads
 (total)](https://cranlogs.r-pkg.org/badges/grand-total/gamlssx?color=brightgreen)](https://cran.r-project.org/package=gamlssx)
 
-## Generalised Additive Extreme Value Models for Location, Scale and Shape
+## Generalized Additive Extreme Value Models for Location, Scale and Shape
 
 The main aim of the `gamlssx` package is to enable a generalized extreme
 value (GEV) to be used as the response distribution in a generalized
 additive model for location scale and shape (GAMLSS), as implemented in
 the [`gamlss` R package](https://CRAN.R-project.org/package=gamlss). The
 [`gamlss.dist` R
-package](https://CRAN.R-project.org/package=gamlss.dist) packge does
+package](https://CRAN.R-project.org/package=gamlss.dist) package does
 offer reversed GEV distribution via in `RGE` family, but (a) this is not
 the usual parameterization of a GEV distribution (for block maxima), and
 (b) in `RGE`, the shape parameter is restricted to have a particular
@@ -50,9 +50,10 @@ is a copy of data of the same name from the [`ismev` R
 package](https://CRAN.R-project.org/package=gamlss). These data contain
 86 annual maximum seas levels recorded at Fremantle, Australia during
 1987-1989. In addition to the year of each sea level, we have available
-the value of the Southern Oscillation Index (SOI). We use `gamlssx`’s
-`fitGEV()` function to fit a model to these data that is similar to the
-first one fitted, to the same data, in Gavin Simpson’s blog post.
+the value of the Southern Oscillation Index (SOI). We use the `fitGEV()`
+function provided in `gamlssx` to fit a model to these data that is
+similar to the first one fitted, to the same data, in Gavin Simpson’s
+blog post.
 
 The `fitGEV()` function calls the function `gamlss::gamlss()`, which
 offers 3 fitting algorithms: `RS` (Rigby and Stasinopoulos), `CG` (Cole

@@ -1,4 +1,4 @@
-#' gamlssx: Generalised Additive Extreme Value Models for Location, Scale and
+#' gamlssx: Generalized Additive Extreme Value Models for Location, Scale and
 #' Shape
 #'
 #' Functions for fitting generalized additive models for the location, scale

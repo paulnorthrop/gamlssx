@@ -4,7 +4,7 @@
 \name{gamlssx-package}
 \alias{gamlssx}
 \alias{gamlssx-package}
-\title{gamlssx: Generalised Additive Extreme Value Models for Location, Scale and
+\title{gamlssx: Generalized Additive Extreme Value Models for Location, Scale and
 Shape}
 \description{
 Functions for fitting generalized additive models for the location, scale

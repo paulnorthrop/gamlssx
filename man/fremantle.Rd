@@ -23,7 +23,7 @@ fremantle
 \description{
 This is a copy of the \code{fremantle} dataset from the \code{ismev} package.
 The \code{fremantle} data frame has 86 rows and 3 columns. The second column
-gives 86 annual maximimum sea levels recorded at Fremantle, Western
+gives 86 annual maximum sea levels recorded at Fremantle, Western
 Australia, within the period 1897 to 1989. The first column gives the
 corresponding years. The third column gives annual mean values of the
 Southern Oscillation Index (SOI), which is a proxy for meteorological
