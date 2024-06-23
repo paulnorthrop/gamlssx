@@ -86,7 +86,7 @@ plot(fremantle$SOI, fremantle$SeaLevel, xlab = "SOI", ylab = "sea level (m)")
 
 ``` r
 # Fit a model with P-spline effects of cYear and SOI on location and scale
-# The default links are indentity for location and log for scale
+# The default links are identity for location and log for scale
 mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), 
               sigma.formula = ~ pb(cYear) + pb(SOI), 
               data = fremantle)
