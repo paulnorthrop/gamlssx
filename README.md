@@ -182,7 +182,7 @@ plot(mod)
 
 ``` r
 # Plot of the fitted component smooth functions
-# Note: gamlssx::term.plot() does not include uncertainty about the intercept
+# Note: gamlss::term.plot() does not include uncertainty about the intercept
 # Location mu
 term.plot(mod, rug = TRUE, pages = 1)
 ```
