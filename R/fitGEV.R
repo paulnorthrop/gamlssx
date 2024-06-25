@@ -30,14 +30,19 @@
 #'   lengths in `stepLength` are reduced for each extra attempt to fit the
 #'   model. The default, `stepReduce = 2` means that the step lengths are
 #'   halved for each extra attempt.
+#' @param steps A logical scalar. Pass `steps = TRUE` to print to the
+#'   console the current value of `stepLength` for each call to
+#'   [`gamlss::gamlss()`][`gamlss::gamlss`].
 #' @param ... Further arguments passed to
 #'   [`gamlss::gamlss()`][`gamlss::gamlss`], in particular `method`, which sets
 #'   the fitting algorithm, with options `RS()`, `CG()` or `mixed()`. The
 #'   default, `method = RS()` seems to work well, as does `method = mixed()`.
 #'   In contrast, `method = CG()` often requires the step length to be reduced
 #'   before convergence is achieved. `fitGEV()` attempts to do this
-#'   automatically. See `stepAttemmpts`.
-#'
+#'   automatically. See `stepAttempts`. Pass `trace = FALSE`
+#'   (to [`gamlss::gamlss.control()`][`gamlss::gamlss.control`]) to avoid
+#'   printing of the global deviance at after each outer iteration of the
+#'   gamlss fitting algorithm.
 #' @details Add details. Explain `stepAttempts` in more detail.
 #'
 #' @return Returns a gamlss object. See the **Value** section of
@@ -111,9 +116,11 @@
 fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
                    mu.link = "identity", sigma.link = "log",
                    xi.link = "identity", stepLength = 1, stepAttempts = 2,
-                   stepReduce = 2, ...) {
+                   stepReduce = 2, steps = FALSE,  ...) {
   # Check that one of the correct values of scoring has been supplied
   scoring <- match.arg(scoring)
+  # Force stepLength to have length 3
+  stepLength <- rep_len(stepLength, 3)
   # Set the scoring algorithm and links
   # For all the gamlss methods to work on the returned fitted model object, we
   # need the call to gamlss::gamlss to include explicitly the names of the
@@ -142,12 +149,15 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
   }
   body(templateFit)[[2]] <- substitute(
     dangerous <- try(gamlss::gamlss(formula = formula, family = algor,
-                                    mu.step = stepLength,
-                                    sigma.step = stepLength,
-                                    nu.step = stepLength, data = data, ...),
+                                    mu.step = stepLength[1],
+                                    sigma.step = stepLength[2],
+                                    nu.step = stepLength[3], data = data,
+                                    ...),
                      silent = TRUE)
     )
-  cat("stepLength = ", stepLength, "\n")
+  if (steps) {
+    cat("stepLength =", stepLength, "\n")
+  }
   mod <- templateFit(formula = formula, stepLength = stepLength, data = data,
                      ...)
   # If an error is thrown then try again stepAttempts times, each time reducing
@@ -155,13 +165,16 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
   isError <- inherits(mod, "try-error")
   while(isError & stepAttempts >= 1) {
     stepLength <- stepLength / stepReduce
-    cat("stepLength = ", stepLength, "\n")
+    if (steps) {
+      cat("stepLength =", stepLength, "\n")
+    }
     # We need to update the value of stepLength in templateFit()
     body(templateFit)[[2]] <- substitute(
       dangerous <- try(gamlss::gamlss(formula = formula, family = algor,
-                                      mu.step = stepLength,
-                                      sigma.step = stepLength,
-                                      nu.step = stepLength, data = data, ...),
+                                      mu.step = stepLength[1],
+                                      sigma.step = stepLength[2],
+                                      nu.step = stepLength[3], data = data,
+                                      ...),
                        silent = TRUE)
     )
     mod <- templateFit(formula = formula, stepLength = stepLength, data = data,

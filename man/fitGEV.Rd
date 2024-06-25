@@ -14,6 +14,7 @@ fitGEV(
   stepLength = 1,
   stepAttempts = 2,
   stepReduce = 2,
+  steps = FALSE,
   ...
 )
 }
@@ -58,13 +59,20 @@ lengths in \code{stepLength} are reduced for each extra attempt to fit the
 model. The default, \code{stepReduce = 2} means that the step lengths are
 halved for each extra attempt.}
 
+\item{steps}{A logical scalar. Pass \code{steps = TRUE} to print to the
+console the current value of \code{stepLength} for each call to
+\code{\link[gamlss:gamlss]{gamlss::gamlss()}}.}
+
 \item{...}{Further arguments passed to
 \code{\link[gamlss:gamlss]{gamlss::gamlss()}}, in particular \code{method}, which sets
 the fitting algorithm, with options \code{RS()}, \code{CG()} or \code{mixed()}. The
 default, \code{method = RS()} seems to work well, as does \code{method = mixed()}.
 In contrast, \code{method = CG()} often requires the step length to be reduced
 before convergence is achieved. \code{fitGEV()} attempts to do this
-automatically. See \code{stepAttemmpts}.}
+automatically. See \code{stepAttempts}. Pass \code{trace = FALSE}
+(to \code{\link[gamlss:gamlss.control]{gamlss::gamlss.control()}}) to avoid
+printing of the global deviance at after each outer iteration of the
+gamlss fitting algorithm.}
 }
 \value{
 Returns a gamlss object. See the \strong{Value} section of
