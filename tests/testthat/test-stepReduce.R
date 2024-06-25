@@ -25,7 +25,7 @@ RSestimates <- as.numeric(c(muhat, sigmahat, xihat))
 loglikRS <- logLik(modRS)
 
 # Fit model using the CG method
-modCG <- fitGEV(y ~ gamlss::pb(x), data = data, method = CG())
+modCG <- fitGEV(y ~ gamlss::pb(x), data = data, method = CG(), steps = TRUE)
 muhat <- modCG$mu.coefficients
 sigmahat <- exp(modCG$sigma.coefficients)
 xihat <- modCG$nu.coefficients
@@ -43,7 +43,8 @@ test_that("RS estimates equal CG estimates", {
 ## Check that stepLength = c(1, 1, 1) gives the same results as the default
 ## stepLength = 1
 
-modCG2 <- fitGEV(y ~ gamlss::pb(x), data = data, method = CG(), stepLength = c(1, 1, 1))
+modCG2 <- fitGEV(y ~ gamlss::pb(x), data = data, method = CG(),
+                 stepLength = c(1, 1, 1))
 muhat <- modCG2$mu.coefficients
 sigmahat <- exp(modCG2$sigma.coefficients)
 xihat <- modCG2$nu.coefficients
