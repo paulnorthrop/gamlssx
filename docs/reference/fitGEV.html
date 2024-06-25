@@ -60,6 +60,7 @@
 <span>  stepLength <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  stepAttempts <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  stepReduce <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  steps <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -119,6 +120,12 @@ model. The default, <code>stepReduce = 2</code> means that the step lengths are
 halved for each extra attempt.</p></dd>
 
 
+<dt>steps</dt>
+<dd><p>A logical scalar. Pass <code>steps = TRUE</code> to write to the
+console the current value of <code>stepLength</code> for each call to
+<code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments passed to
 <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code>, in particular <code>method</code>, which sets
@@ -126,20 +133,24 @@ the fitting algorithm, with options <code>RS()</code>, <code>CG()</code> or <cod
 default, <code>method = RS()</code> seems to work well, as does <code>method = mixed()</code>.
 In contrast, <code>method = CG()</code> often requires the step length to be reduced
 before convergence is achieved. <code>fitGEV()</code> attempts to do this
-automatically. See <code>stepAttemmpts</code>.</p></dd>
+automatically. See <code>stepAttempts</code>. Pass <code>trace = FALSE</code>
+(to <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.control.html" class="external-link">gamlss::gamlss.control()</a></code>) to avoid
+writing to the console the global deviance after each outer iteration of
+the gamlss fitting algorithm.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>Returns a gamlss object. See the <strong>Value</strong> section of
+<p>Returns a <code>gamlss</code> object. See the <strong>Value</strong> section of
 <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code>. The class of the returned object is
 <code>c("gamlssx", "gamlss", "gam", "glm", "lm")</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Add details. Explain <code>stepAttempts</code> in more detail.</p>
+    <p>See <code><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss::gamlss()</a></code> for information about
+the model fitted and the fitting algorithm.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -182,7 +193,6 @@ automatically. See <code>stepAttemmpts</code>.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit model using the default RS method with Fisher's scoring</span></span></span>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu">gamlss</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 1: Global Deviance = 323.1515 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 2: Global Deviance = 320.4994 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 3: Global Deviance = 320.1414 </span>
@@ -197,7 +207,8 @@ automatically. See <code>stepAttemmpts</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gamlss::gamlss(formula = y ~ gamlss::pb(x), family = GEVfisher(mu.link = "identity",  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     sigma.link = "log", nu.link = "identity"), data = data,  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     mu.step = 1, sigma.step = 1, nu.step = 1) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     mu.step = c(1, 1, 1)[1], sigma.step = c(1, 1, 1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     )[2], nu.step = c(1, 1, 1)[3]) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting method: RS() </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -251,19 +262,16 @@ automatically. See <code>stepAttemmpts</code>.</p></dd>
 <span class="r-plt img"><img src="fitGEV-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit model using the mixed method and quasi-Newton scoring</span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="fu">mixed</span><span class="op">(</span><span class="op">)</span>, scoring <span class="op">=</span> <span class="st">"quasi"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-RS iteration 1: Global Deviance = 323.1712 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 1: Global Deviance = 320.1204 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 2: Global Deviance = 320.086 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 3: Global Deviance = 320.0833 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 4: Global Deviance = 320.083 </span>
+<span class="r-in"><span><span class="co"># Use trace = FALSE to prevent writing the global deviance to the console</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="fu">mixed</span><span class="op">(</span><span class="op">)</span>, scoring <span class="op">=</span> <span class="st">"quasi"</span>,</span></span>
+<span class="r-in"><span>              trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit model using the CG method</span></span></span>
-<span class="r-in"><span><span class="co"># The default step length of 1 needs to be reduce to enable convergence</span></span></span>
-<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="fu">CG</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.5 </span>
+<span class="r-in"><span><span class="co"># The default step length of 1 needs to be reduced to enable convergence</span></span></span>
+<span class="r-in"><span><span class="co"># Use steps = TRUE to write the step lengths to the console</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="fu">CG</span><span class="op">(</span><span class="op">)</span>, steps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength = 1 1 1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength = 0.5 0.5 0.5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 1: Global Deviance = 337.4163 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 2: Global Deviance = 322.5637 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GAMLSS-CG iteration 3: Global Deviance = 321.03 </span>
@@ -293,9 +301,6 @@ automatically. See <code>stepAttemmpts</code>.</p></dd>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fitGEV</span><span class="op">(</span><span class="va">SeaLevel</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">cYear</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">SOI</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>             sigma.formula <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">cYear</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">SOI</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>             data <span class="op">=</span> <span class="va">fremantle</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stepLength =  0.25 </span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), sigma.formula = ~pb(cYear) +     pb(SOI), data = fremantle):</span> No convergence. An error was thrown from the last call to gamlss()</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Summary of model fit</span></span></span>
@@ -306,7 +311,8 @@ automatically. See <code>stepAttemmpts</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gamlss::gamlss(formula = y ~ pb(x), family = GEVfisher(mu.link = "identity",  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     sigma.link = "log", nu.link = "identity"), data = data,  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     method = CG(), mu.step = 0.5, sigma.step = 0.5,      nu.step = 0.5) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     method = CG(), mu.step = c(0.5, 0.5, 0.5)[1], sigma.step = c(0.5,  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.5, 0.5)[2], nu.step = c(0.5, 0.5, 0.5)[3]) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting method: CG() </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -362,7 +368,7 @@ automatically. See <code>stepAttemmpts</code>.</p></dd>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/wp.html" class="external-link">wp</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in as.environment(DaTa):</span> invalid object for 'as.environment'</span>
 <span class="r-in"><span><span class="co"># Plot of the fitted component smooth functions</span></span></span>
-<span class="r-in"><span><span class="co"># Note: gamlssx::term.plot() does not include uncertainty about the intercept</span></span></span>
+<span class="r-in"><span><span class="co"># Note: gamlss::term.plot() does not include uncertainty about the intercept</span></span></span>
 <span class="r-in"><span><span class="co"># Location mu</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/term.plot.html" class="external-link">term.plot</a></span><span class="op">(</span><span class="va">mod</span>, rug <span class="op">=</span> <span class="cn">TRUE</span>, pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="fitGEV-7.png" alt="" width="700" height="433"></span>
