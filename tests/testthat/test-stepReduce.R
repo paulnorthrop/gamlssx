@@ -32,13 +32,30 @@ xihat <- modCG$nu.coefficients
 CGestimates <- as.numeric(c(muhat, sigmahat, xihat))
 loglikCG <- logLik(modCG)
 
-
 test_that("RS logLik equals CG logLik", {
   testthat::expect_equal(loglikRS, loglikCG, tolerance = tol)
 })
 
 test_that("RS estimates equal CG estimates", {
   testthat::expect_equal(RSestimates, CGestimates, tolerance = tol)
+})
+
+## Check that stepLength = c(1, 1, 1) gives the same results as the default
+## stepLength = 1
+
+modCG2 <- fitGEV(y ~ gamlss::pb(x), data = data, method = CG(), stepLength = c(1, 1, 1))
+muhat <- modCG2$mu.coefficients
+sigmahat <- exp(modCG2$sigma.coefficients)
+xihat <- modCG2$nu.coefficients
+CG2estimates <- as.numeric(c(muhat, sigmahat, xihat))
+loglikCG2 <- logLik(modCG2)
+
+test_that("CG logLik equals CG2 logLik", {
+  testthat::expect_equal(loglikCG, loglikCG2, tolerance = tol)
+})
+
+test_that("RS estimates equal CG estimates", {
+  testthat::expect_equal(CGestimates, CG2estimates, tolerance = tol)
 })
 
 # Quasi-Newton scoring
@@ -75,5 +92,6 @@ test_that("RS estimates equal CG estimates", {
 
 # Fit model using the CG method
 test_that("CG needs extra iterations with a reduced step length", {
-  testthat::expect_error(fitGEV(y ~ gamlss::pb(x), data = data, method = CG(), stepAttempts = 0))
+  testthat::expect_error(fitGEV(y ~ gamlss::pb(x), data = data, method = CG(),
+                                stepAttempts = 0))
 })
