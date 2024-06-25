@@ -11,3 +11,4 @@
 ^\.Rhistory$
 ^pkgdown$
 ^LICENSE\.md$
+^CRAN-SUBMISSION$
