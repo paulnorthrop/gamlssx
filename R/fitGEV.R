@@ -44,7 +44,7 @@
 #'   writing to the console the global deviance after each outer iteration of
 #'   the gamlss fitting algorithm.
 #' @details See [`gamlss::gamlss()`][`gamlss::gamlss`] for information about
-#'   the model fitted and the fitting algorithm.
+#'   the model and the fitting algorithm.
 #' @return Returns a `gamlss` object. See the **Value** section of
 #'   [`gamlss::gamlss()`][`gamlss::gamlss`]. The class of the returned object is
 #'   `c("gamlssx", "gamlss", "gam", "glm", "lm")`.

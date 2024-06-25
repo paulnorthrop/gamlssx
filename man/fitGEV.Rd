@@ -84,7 +84,7 @@ Describe
 }
 \details{
 See \code{\link[gamlss:gamlss]{gamlss::gamlss()}} for information about
-the model fitted and the fitting algorithm.
+the model and the fitting algorithm.
 }
 \examples{
 # Load gamlss, for the function pb()
