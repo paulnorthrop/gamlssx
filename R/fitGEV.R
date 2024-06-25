@@ -151,7 +151,7 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
   mod <- templateFit(formula = formula, stepLength = stepLength, data = data,
                      ...)
   # If an error is thrown then try again stepAttempts times, each time reducing
-  # the step length by a factor of a halfs
+  # the step length by a factor of a half
   isError <- inherits(mod, "try-error")
   while(isError & stepAttempts >= 1) {
     stepLength <- stepLength / stepReduce
