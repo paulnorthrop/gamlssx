@@ -4,7 +4,7 @@ tol <- 1e-4
 
 # gamlss
 
-mod <- gamlssx::fitGEV(SeaLevel ~ 1, data = fremantle)
+mod <- gamlssx::fitGEV(SeaLevel ~ 1, data = fremantle, steps = TRUE)
 # Estimated coefficients
 muhat <- as.numeric(mod$mu.coefficients) # 1.482304
 sigmahat <- as.numeric(exp(mod$sigma.coefficients)) # 0.1412218
