@@ -43,9 +43,9 @@
 #'   (to [`gamlss::gamlss.control()`][`gamlss::gamlss.control`]) to avoid
 #'   writing to the console the global deviance after each outer iteration of
 #'   the gamlss fitting algorithm.
-#' @details Add details. Explain `stepAttempts` in more detail.
-#'
-#' @return Returns a gamlss object. See the **Value** section of
+#' @details See [`gamlss::gamlss()`][`gamlss::gamlss`] for information about
+#'   the model fitted and the fitting algorithm.
+#' @return Returns a `gamlss` object. See the **Value** section of
 #'   [`gamlss::gamlss()`][`gamlss::gamlss`]. The class of the returned object is
 #'   `c("gamlssx", "gamlss", "gam", "glm", "lm")`.
 #' @seealso [`GEV`],
@@ -110,7 +110,7 @@
 #' # Worm plot
 #' wp(mod)
 #' # Plot of the fitted component smooth functions
-#' # Note: gamlssx::term.plot() does not include uncertainty about the intercept
+#' # Note: gamlss::term.plot() does not include uncertainty about the intercept
 #' # Location mu
 #' term.plot(mod, rug = TRUE, pages = 1)
 #' # Scale sigma

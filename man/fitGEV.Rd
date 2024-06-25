@@ -75,7 +75,7 @@ writing to the console the global deviance after each outer iteration of
 the gamlss fitting algorithm.}
 }
 \value{
-Returns a gamlss object. See the \strong{Value} section of
+Returns a \code{gamlss} object. See the \strong{Value} section of
 \code{\link[gamlss:gamlss]{gamlss::gamlss()}}. The class of the returned object is
 \code{c("gamlssx", "gamlss", "gam", "glm", "lm")}.
 }
@@ -83,7 +83,8 @@ Returns a gamlss object. See the \strong{Value} section of
 Describe
 }
 \details{
-Add details. Explain \code{stepAttempts} in more detail.
+See \code{\link[gamlss:gamlss]{gamlss::gamlss()}} for information about
+the model fitted and the fitting algorithm.
 }
 \examples{
 # Load gamlss, for the function pb()
@@ -144,7 +145,7 @@ plot(mod)
 # Worm plot
 wp(mod)
 # Plot of the fitted component smooth functions
-# Note: gamlssx::term.plot() does not include uncertainty about the intercept
+# Note: gamlss::term.plot() does not include uncertainty about the intercept
 # Location mu
 term.plot(mod, rug = TRUE, pages = 1)
 # Scale sigma
