@@ -107,7 +107,7 @@ lines(data$x, fitted(mod))
 mod <- fitGEV(y ~ pb(x), data = data, method = mixed(), scoring = "quasi")
 
 # Fit model using the CG method
-# The default step length of 1 needs to be reduce to enable convergence
+# The default step length of 1 needs to be reduced to enable convergence
 mod <- fitGEV(y ~ pb(x), data = data, method = CG())
 
 ##### Fremantle annual maximum sea levels
