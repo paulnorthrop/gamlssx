@@ -59,7 +59,7 @@ lengths in \code{stepLength} are reduced for each extra attempt to fit the
 model. The default, \code{stepReduce = 2} means that the step lengths are
 halved for each extra attempt.}
 
-\item{steps}{A logical scalar. Pass \code{steps = TRUE} to print to the
+\item{steps}{A logical scalar. Pass \code{steps = TRUE} to write to the
 console the current value of \code{stepLength} for each call to
 \code{\link[gamlss:gamlss]{gamlss::gamlss()}}.}
 
@@ -71,8 +71,8 @@ In contrast, \code{method = CG()} often requires the step length to be reduced
 before convergence is achieved. \code{fitGEV()} attempts to do this
 automatically. See \code{stepAttempts}. Pass \code{trace = FALSE}
 (to \code{\link[gamlss:gamlss.control]{gamlss::gamlss.control()}}) to avoid
-printing of the global deviance at after each outer iteration of the
-gamlss fitting algorithm.}
+writing to the console the global deviance after each outer iteration of
+the gamlss fitting algorithm.}
 }
 \value{
 Returns a gamlss object. See the \strong{Value} section of
@@ -112,11 +112,14 @@ plot(data$x, data$y, xlab = "x", ylab = "y")
 lines(data$x, fitted(mod))
 
 # Fit model using the mixed method and quasi-Newton scoring
-mod <- fitGEV(y ~ pb(x), data = data, method = mixed(), scoring = "quasi")
+# Use trace = FALSE to prevent writing the global deviance to the console
+mod <- fitGEV(y ~ pb(x), data = data, method = mixed(), scoring = "quasi",
+              trace = FALSE)
 
 # Fit model using the CG method
 # The default step length of 1 needs to be reduced to enable convergence
-mod <- fitGEV(y ~ pb(x), data = data, method = CG())
+# Use steps = TRUE to write the step lengths to the console
+mod <- fitGEV(y ~ pb(x), data = data, method = CG(), steps = TRUE)
 
 ##### Fremantle annual maximum sea levels
 ##### See also the gamlssx package README file
