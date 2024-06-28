@@ -139,7 +139,7 @@ GEVfisher <- function(mu.link = "identity", sigma.link = "log",
               dldddv <- -gev23e(scale = sigma, shape = nu)
               return(dldddv)
             },
-        G.dev.incr  = function(y, mu, sigma, nu,...) {
+         G.dev.incr = function(y, mu, sigma, nu,...) {
           val <- -2 * dGEV(x = y, mu = mu, sigma = sigma, nu = nu, log = TRUE)
           return(val)
         },
@@ -254,7 +254,7 @@ GEVquasi <- function(mu.link = "identity", sigma.link = "log",
            dldddv <- -dldd * dldv
            return(dldddv)
          },
-         G.dev.incr  = function(y, mu, sigma, nu,...) {
+          G.dev.incr = function(y, mu, sigma, nu,...) {
            val <- -2 * dGEV(x = y, mu = mu, sigma = sigma, nu = nu, log = TRUE)
            return(val)
          },
