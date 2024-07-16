@@ -12,3 +12,4 @@
 ^pkgdown$
 ^LICENSE\.md$
 ^CRAN-SUBMISSION$
+^create_logo$

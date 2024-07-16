@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gamlssx
+# gamlssx <img src="tools/gamlssx_logo.png" height = "138" align="right" />
 
 [![Appveyor Build
 status](https://ci.appveyor.com/api/projects/status/99jojhgk9t4agdmv/branch/main?svg=true)](https://ci.appveyor.com/project/paulnorthrop/gamlssx/branch/main)
@@ -90,7 +90,6 @@ plot(fremantle$SOI, fremantle$SeaLevel, xlab = "SOI", ylab = "sea level (m)")
 mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), 
               sigma.formula = ~ pb(cYear) + pb(SOI), 
               data = fremantle)
-#> stepLength =  1 
 #> GAMLSS-RS iteration 1: Global Deviance = -112.2422 
 #> GAMLSS-RS iteration 2: Global Deviance = -117.4965 
 #> GAMLSS-RS iteration 3: Global Deviance = -118.3007 
@@ -116,7 +115,8 @@ summary(mod)
 #> Call:  gamlss::gamlss(formula = SeaLevel ~ pb(cYear) + pb(SOI),  
 #>     sigma.formula = ~pb(cYear) + pb(SOI), family = GEVfisher(mu.link = "identity",  
 #>         sigma.link = "log", nu.link = "identity"),  
-#>     data = fremantle, mu.step = 1, sigma.step = 1,      nu.step = 1) 
+#>     data = fremantle, mu.step = c(1, 1, 1)[1], sigma.step = c(1,  
+#>     1, 1)[2], nu.step = c(1, 1, 1)[3]) 
 #> 
 #> Fitting method: RS() 
 #> 
