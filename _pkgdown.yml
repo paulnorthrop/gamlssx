@@ -1,11 +1,14 @@
 destination: docs
 
+url: https://paulnorthrop.github.io/gamlssx/
+
 development:
   mode: release
 
 template:
-  params:
-    bootswatch: paper
+  bootstrap: 5
+  bslib:
+    danger: "#A6081A"
 
 reference:
   - title: Package
