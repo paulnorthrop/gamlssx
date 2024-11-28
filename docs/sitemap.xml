@@ -1,36 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fitGEV.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fremantle.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gamlssx-internal.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gamlssx-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/GEV.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gevExpInfo.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://paulnorthrop.github.io/gamlssx/404.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/authors.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/index.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/LICENSE.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/reference/fitGEV.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/reference/fremantle.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/reference/gamlssx-internal.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/reference/gamlssx-package.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/reference/GEV.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/reference/gevExpInfo.html</loc></url>
+<url><loc>https://paulnorthrop.github.io/gamlssx/reference/index.html</loc></url>
 </urlset>
+
