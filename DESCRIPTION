@@ -27,5 +27,5 @@ Suggests:
 URL: https://paulnorthrop.github.io/gamlssx/, https://github.com/paulnorthrop/gamlssx
 BugReports: https://github.com/paulnorthrop/gamlssx/issues
 Config/testthat/edition: 3
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
