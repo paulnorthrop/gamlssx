@@ -43,7 +43,7 @@ length equal to the maximum of the lengths of the arguments, excluding
 Calculates the expected information matrix for the GEV distribution.
 }
 \details{
-\code{gevExpInfo} calculates, for single pair of values
+\code{gevExpInfo} calculates, for a single pair of values
 \eqn{(\sigma, \xi) = } \verb{(scale, shape)}, the expected information matrix for a
 single observation from a GEV distribution with distribution function
 \deqn{F(x) = P(X \leq x) = \exp\left\{ -\left[ 1+\xi\left(\frac{x-\mu}{\sigma}\right)

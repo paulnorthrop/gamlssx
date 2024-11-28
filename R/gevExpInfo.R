@@ -8,7 +8,7 @@
 #' @param eps A numeric scalar. For values of \eqn{\xi} in `shape` that lie in
 #'   `(-eps, eps)` an approximation is used instead of a direct calculation.
 #'   See **Details**. If `eps` is a vector then only the first element is used.
-#' @details `gevExpInfo` calculates, for single pair of values
+#' @details `gevExpInfo` calculates, for a single pair of values
 #'   \eqn{(\sigma, \xi) = } `(scale, shape)`, the expected information matrix for a
 #'   single observation from a GEV distribution with distribution function
 #'   \deqn{F(x) = P(X \leq x) = \exp\left\{ -\left[ 1+\xi\left(\frac{x-\mu}{\sigma}\right)
