@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# gamlssx <img src="tools/gamlssx_logo.png" height = "138" align="right" />
+# gamlssx <img src="tools/gamlssx_logo.png" alt = "gamlssx logo" height = "138" align="right" />
 
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/99jojhgk9t4agdmv/branch/main?svg=true)](https://ci.appveyor.com/project/paulnorthrop/gamlssx/branch/main)
 [![R-CMD-check](https://github.com/paulnorthrop/gamlssx/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paulnorthrop/gamlssx/actions/workflows/R-CMD-check.yaml)
@@ -41,9 +41,18 @@ library(gamlss)
 library(gamlssx)
 # Transform Year so that it is centred on 0 
 fremantle <- transform(fremantle, cYear = Year - median(Year))
+```
+
+```{r, fig.alt = "Plot of sea level against year"}
 # Plot sea level against year and against SOI
 plot(fremantle$Year, fremantle$SeaLevel, xlab = "year", ylab = "sea level (m)")
+```
+
+```{r, fig.alt = "Plot of sea level against SOI"}
 plot(fremantle$SOI, fremantle$SeaLevel, xlab = "SOI", ylab = "sea level (m)")
+```
+
+```{r}
 # Fit a model with P-spline effects of cYear and SOI on location and scale
 # The default links are identity for location and log for scale
 mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI), 
@@ -51,12 +60,21 @@ mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI),
               data = fremantle)
 # Summary of model fit
 summary(mod)
+```
+
+```{r, fig.alt = "Residual diagnostic plots"}
 # Model diagnostic plots
 plot(mod)
+```
+
+```{r, fig.alt = "Term plots for parameter mu for cYear and SOI"}
 # Plot of the fitted component smooth functions
 # Note: gamlss::term.plot() does not include uncertainty about the intercept
 # Location mu
 term.plot(mod, rug = TRUE, pages = 1)
+```
+
+```{r, fig.alt = "Term plots for parameter sigma for cYear and SOI"}
 # Scale sigma
 term.plot(mod, what = "sigma", rug = TRUE, pages = 1)
 ```

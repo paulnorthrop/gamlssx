@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gamlssx <img src="tools/gamlssx_logo.png" height = "138" align="right" />
+# gamlssx <img src="tools/gamlssx_logo.png" alt = "gamlssx logo" height = "138" align="right" />
 
 [![Appveyor Build
 status](https://ci.appveyor.com/api/projects/status/99jojhgk9t4agdmv/branch/main?svg=true)](https://ci.appveyor.com/project/paulnorthrop/gamlssx/branch/main)
@@ -72,17 +72,20 @@ library(gamlss)
 library(gamlssx)
 # Transform Year so that it is centred on 0 
 fremantle <- transform(fremantle, cYear = Year - median(Year))
+```
+
+``` r
 # Plot sea level against year and against SOI
 plot(fremantle$Year, fremantle$SeaLevel, xlab = "year", ylab = "sea level (m)")
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" alt="Plot of sea level against year" width="100%" />
 
 ``` r
 plot(fremantle$SOI, fremantle$SeaLevel, xlab = "SOI", ylab = "sea level (m)")
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" alt="Plot of sea level against SOI" width="100%" />
 
 ``` r
 # Fit a model with P-spline effects of cYear and SOI on location and scale
@@ -104,9 +107,6 @@ mod <- fitGEV(SeaLevel ~ pb(cYear) + pb(SOI),
 #> GAMLSS-RS iteration 12: Global Deviance = -118.9269 
 #> GAMLSS-RS iteration 13: Global Deviance = -118.9351 
 #> GAMLSS-RS iteration 14: Global Deviance = -118.9359
-```
-
-``` r
 # Summary of model fit
 summary(mod)
 #> ******************************************************************
@@ -169,7 +169,7 @@ summary(mod)
 plot(mod)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" alt="Residual diagnostic plots" width="100%" />
 
     #> ******************************************************************
     #>        Summary of the Quantile Residuals
@@ -187,14 +187,14 @@ plot(mod)
 term.plot(mod, rug = TRUE, pages = 1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-4.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" alt="Term plots for parameter mu for cYear and SOI" width="100%" />
 
 ``` r
 # Scale sigma
 term.plot(mod, what = "sigma", rug = TRUE, pages = 1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-5.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" alt="Term plots for parameter sigma for cYear and SOI" width="100%" />
 
 ## Installation
 
