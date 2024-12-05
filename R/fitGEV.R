@@ -1,6 +1,8 @@
 #' Fit a Generalized Extreme value (GEV) GAMLSS Model
 #'
-#' Describe
+#' Fits a Generalized Additive Model (GAM) for Location, Scale and Shape with
+#' a GEV response distribution, using the function
+#' [`gamlss::gamlss()`][`gamlss::gamlss`].
 #'
 #' @inheritParams gamlss::gamlss
 #'

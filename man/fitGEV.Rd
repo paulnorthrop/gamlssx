@@ -80,7 +80,9 @@ Returns a \code{gamlss} object. See the \strong{Value} section of
 \code{c("gamlssx", "gamlss", "gam", "glm", "lm")}.
 }
 \description{
-Describe
+Fits a Generalized Additive Model (GAM) for Location, Scale and Shape with
+a GEV response distribution, using the function
+\code{\link[gamlss:gamlss]{gamlss::gamlss()}}.
 }
 \details{
 See \code{\link[gamlss:gamlss]{gamlss::gamlss()}} for information about
