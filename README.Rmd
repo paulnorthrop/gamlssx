@@ -85,3 +85,4 @@ To get the current released version from CRAN:
 
 ```{r installation, eval = FALSE}
 install.packages("gamlssx")
+```
