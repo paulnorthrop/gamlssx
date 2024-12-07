@@ -41,7 +41,7 @@ for an overview of the use of GAMs for modelling extreme values, which
 uses the [mgcv](https://cran.r-project.org/package=mgcv) R package to
 fit similar models. The [VGAM](https://CRAN.R-project.org/package=VGAM)
 and [evgam](https://CRAN.R-project.org/package=evgam) R packages can
-also be used
+also be used.
 
 ## An example
 
