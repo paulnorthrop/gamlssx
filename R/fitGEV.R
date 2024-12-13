@@ -147,7 +147,7 @@ fitGEV <- function(formula, data, scoring = c("fisher", "quasi"),
       GEVquasi(mu.link = mu.link, sigma.link = sigma.link, nu.link = xi.link)
       )
   }
-  # Add the link functions to the call to gamlss() in fisherFit()
+  # Add the link functions to the call to gamlss() in templateFit()
   templateFit <- function(formula, stepLength, data, ...) {
     dangerous <- NULL
     return(dangerous)
