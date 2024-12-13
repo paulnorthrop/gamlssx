@@ -105,7 +105,7 @@ data <- data.frame(y = as.numeric(y), x = x)
 plot(x, y)
 
 # Fit model using the default RS method with Fisher's scoring
-mod <- fitGEV(y ~ gamlss::pb(x), data = data)
+mod <- fitGEV(y ~ pb(x), data = data)
 # Summary of model fit
 summary(mod)
 # Residual diagnostic plots
