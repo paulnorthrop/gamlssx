@@ -31,7 +31,7 @@
 #'   be the number required.
 #'
 #' @details The distribution function of a GEV distribution with parameters
-#'  \code{loc} = \eqn{\mu}, \code{scale} = \eqn{\sigma (> 0)} and
+#'  \code{location} = \eqn{\mu}, \code{scale} = \eqn{\sigma (> 0)} and
 #'  \code{shape} = \eqn{\xi} (\eqn{= \nu}) is
 #'   \deqn{F(x) = P(X \leq x) = \exp\left\{ -\left[ 1+\xi\left(\frac{x-\mu}{\sigma}\right)
 #'   \right]_+^{-1/\xi} \right\},}
