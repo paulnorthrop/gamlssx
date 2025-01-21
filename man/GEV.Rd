@@ -75,8 +75,8 @@ the generalized extreme value distribution given in \strong{Details} below.
 The distribution function of a GEV distribution with parameters
 \code{location} = \eqn{\mu}, \code{scale} = \eqn{\sigma (> 0)} and
 \code{shape} = \eqn{\xi} (\eqn{= \nu}) is
-\deqn{F(x) = P(X \leq x) = \exp\left\{ -\left[ 1+\xi\left(\frac{x-\mu}{\sigma}\right)
-  \right]_+^{-1/\xi} \right\},}
+\deqn{F(x \mid \mu, \sigma, \xi) = P(X \leq x) =
+  \exp\left\{ -\left[ 1+\xi\left(\frac{x-\mu}{\sigma}\right) \right]_+^{-1/\xi} \right\},}
 where \eqn{x_+ = \max(x, 0)}. If \eqn{\xi = 0} the
 distribution function is defined as the limit as \eqn{\xi} tends to zero.
 The support of the distribution depends on \eqn{\xi}: it is
