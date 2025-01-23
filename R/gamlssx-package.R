@@ -15,6 +15,7 @@
 #'   models for location, scale and shape (with discussion), *Appl. Statist.*,
 #'   **54**, part 3, pages 507-554. \doi{10.1111/j.1467-9876.2005.00510.x}
 #' @seealso [`fitGEV()`], [`gamlss::gamlss()`][`gamlss::gamlss`]
+#' @import gamlss
 #' @importFrom stats sd
 #' @docType package
 "_PACKAGE"

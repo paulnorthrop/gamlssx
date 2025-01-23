@@ -89,7 +89,7 @@ See \code{\link[gamlss:gamlss]{gamlss::gamlss()}} for information about
 the model and the fitting algorithm.
 }
 \examples{
-# Load gamlss, for the function pb()
+# Load gamlss, for the functions term.plot() and wp()
 library(gamlss)
 
 ##### Simulated data

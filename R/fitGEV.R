@@ -54,7 +54,7 @@
 #'   [`gamlss.dist::gamlss.family()`][`gamlss.dist::gamlss.family`],
 #'   [`gamlss::gamlss()`][`gamlss::gamlss`]
 #' @examples
-#' # Load gamlss, for the function pb()
+#' # Load gamlss, for the functions term.plot() and wp()
 #' library(gamlss)
 #'
 #' ##### Simulated data
