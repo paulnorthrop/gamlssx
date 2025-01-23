@@ -35,7 +35,7 @@ We consider the `fremantle` data include in the `gamlssx` package, which is a co
 The `fitGEV()` function calls the function `gamlss::gamlss()`, which offers 3 fitting algorithms: `RS` (Rigby and Stasinopoulos), `CG` (Cole and Green) and `mixed` (`RS` initially followed by `CG`). In the code below, we use the default `RS` algorithm. `fitGEV()` offers 2 scoring methods to calculate the weights used in the algorithm. Here, we use the default, Fisher's scoring, based on the expected Fisher information. The code below does not do justice to the functionality of the `gamlss` package.  See the [GAMLSS books](https://www.gamlss.com/books-vignettes/) for more information. 
 
 ```{r, message = FALSE}
-# Load gamlss, for the function pb()
+# Load gamlss, for the function term.plot()
 library(gamlss)
 # Load gamlssx
 library(gamlssx)

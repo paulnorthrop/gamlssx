@@ -66,7 +66,7 @@ package. See the [GAMLSS books](https://www.gamlss.com/books-vignettes/)
 for more information.
 
 ``` r
-# Load gamlss, for the function pb()
+# Load gamlss, for the function term.plot()
 library(gamlss)
 # Load gamlssx
 library(gamlssx)
