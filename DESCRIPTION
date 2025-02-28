@@ -21,7 +21,7 @@ License: GPL (>= 3)
 LazyData: TRUE
 Encoding: UTF-8
 Depends:
-    R (>= 3.3.0)
+    R (>= 4.1.0)
 Suggests: 
     testthat (>= 3.0.0)
 URL: https://paulnorthrop.github.io/gamlssx/, https://github.com/paulnorthrop/gamlssx
