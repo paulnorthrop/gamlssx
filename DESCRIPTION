@@ -1,8 +1,8 @@
 Package: gamlssx
 Type: Package
 Title: Generalized Additive Extreme Value Models for Location, Scale and Shape
-Version: 1.0.1
-Date: 2024-06-25
+Version: 1.0.2
+Date: 2025-02-28
 Authors@R: c(
     person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
       role = c("aut", "cre", "cph")),

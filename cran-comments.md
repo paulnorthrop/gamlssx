@@ -1,10 +1,4 @@
-## Resubmission (v1.0.1)
-
-In this version I have 
-
-* DESCRIPTION: removed unnecessary spaces at the ends of lines
-* fitGEV.R: avoided writing messages to the console. By default no messages are written. The user can turn them on.
-* fitGEV.R: in ... noted that trace = FALSE can be used to avoid gamlss() writing to the console. 
+This is primarily a patch to deal with the check NOTEs at https://cran.r-project.org/web/checks/check_results_gamlssx.html
 
 ## R CMD check results
 
