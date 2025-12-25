@@ -1,5 +1,3 @@
-This is primarily a patch to deal with the check NOTEs at https://cran.r-project.org/web/checks/check_results_gamlssx.html
-
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
