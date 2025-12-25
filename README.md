@@ -1,10 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gamlssx <img src="tools/gamlssx_logo.png" alt = "gamlssx logo" height = "138" align="right" />
+# gamlssx <a href="https://paulnorthrop.github.io/gamlssx/"><img src="tools/gamlssx_logo.png" align="right" style="float:right; height:150px;" alt="gamlssx logo"/></a>
 
-[![Appveyor Build
-status](https://ci.appveyor.com/api/projects/status/99jojhgk9t4agdmv/branch/main?svg=true)](https://ci.appveyor.com/project/paulnorthrop/gamlssx/branch/main)
 [![R-CMD-check](https://github.com/paulnorthrop/gamlssx/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paulnorthrop/gamlssx/actions/workflows/R-CMD-check.yaml)
 [![Coverage
 Status](https://codecov.io/github/paulnorthrop/gamlssx/coverage.svg?branch=master)](https://app.codecov.io/github/paulnorthrop/gamlssx?branch=master)
